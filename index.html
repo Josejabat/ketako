@@ -3,57 +3,210 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f1520">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ketako">
+<link rel="manifest" href="/manifest.json">
 <title>Ketako</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 <style>
-*(margin:0;padding:0;box-sizing:border-box)
-* { margin:0; padding:0; box-sizing:border-box; }
-body { background:#0a0a0a; color:#fff; font-family:system-ui,sans-serif; display:flex; flex-direction:column; height:100dvh; }
-.logo { background:#e85d04; color:#fff; width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; }
-header { padding:12px 16px; border-bottom:1px solid #222; display:flex; align-items:center; gap:12px; }
-header div { display:flex; flex-direction:column; }
-h1 { font-size:18px; font-weight:600; }
-h1 span { color:#e85d04; }
-.sub { font-size:12px; color:#888; }
-#chat { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:12px; }
-.msg { max-width:80%; padding:10px 14px; border-radius:16px; line-height:1.5; font-size:15px; }
-.user { background:#e85d04; align-self:flex-end; border-bottom-right-radius:4px; }
-.bot { background:#1a1a1a; align-self:flex-start; border-bottom-left-radius:4px; color:#eee; }
-.bot ul,.bot ol { margin-left:18px; }
-.bot strong { color:#e85d04; }
-.bot a { color:#e85d04; }
-footer { padding:12px 16px; border-top:1px solid #222; background:#0a0a0a; }
-.input-row { display:flex; gap:8px; align-items:center; }
-#micbtn { background:#1a1a1a; color:#e85d04; border:2px solid #e85d04; padding:10px 14px; border-radius:12px; cursor:pointer; font-size:20px; transition:all 0.2s; flex-shrink:0; }
-#micbtn.on { background:#e85d04; color:#fff; animation:pulse 1s infinite; }
-#micbtn.recording { background:#e85d04; color:#fff; }
-@keyframes pulse { 0%{opacity:1}50%{opacity:0.6}100%{opacity:1} }
-input { flex:1; background:#1a1a1a; border:1px solid #333; color:#fff; padding:12px 16px; border-radius:12px; font-size:15px; outline:none; }
-input:focus { border-color:#e85d04; }
-#sendbtn { background:#e85d04; color:#fff; border:none; padding:12px 18px; border-radius:12px; cursor:pointer; font-size:18px; flex-shrink:0; }
-button:disabled { opacity:0.5; cursor:not-allowed; }
-#status { font-size:11px; color:#e85d04; text-align:center; margin-top:6px; min-height:16px; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f1520;color:#fff;font-family:system-ui,sans-serif;display:flex;flex-direction:column;height:100dvh;overflow:hidden}
+
+/* Header con gradiente naranja-azul como cielo */
+header{
+  padding:14px 16px 12px;
+  background:linear-gradient(160deg,#0d2a5e 0%,#1a4a9e 45%,#c45a0a 100%);
+  display:flex;align-items:center;justify-content:space-between;
+  position:relative;
+  flex-shrink:0;
+}
+/* Nubes decorativas */
+header::before{
+  content:'';position:absolute;
+  top:8px;left:20px;
+  width:100px;height:28px;
+  background:rgba(255,255,255,0.07);
+  border-radius:40px;
+  filter:blur(6px);
+}
+header::after{
+  content:'';position:absolute;
+  top:16px;right:30px;
+  width:70px;height:20px;
+  background:rgba(255,180,80,0.12);
+  border-radius:40px;
+  filter:blur(5px);
+}
+.header-left{display:flex;align-items:center;gap:10px}
+.logo-icon{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,#e8711a,#f4a03a);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:16px;color:#fff;
+  flex-shrink:0;
+}
+.header-text h1{font-size:18px;font-weight:600;letter-spacing:-0.3px}
+.header-text h1 span{color:#f4a03a}
+.header-text .sub{font-size:11px;color:rgba(255,255,255,0.6);margin-top:1px}
+.header-status{font-size:11px;color:rgba(255,255,255,0.5);text-align:right}
+.status-dot{
+  display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:#4ade80;margin-right:4px;
+  animation:blink 2s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* Accesos rápidos */
+.quick-bar{
+  display:flex;gap:8px;padding:10px 14px;
+  overflow-x:auto;flex-shrink:0;
+  scrollbar-width:none;
+  background:#0f1520;
+  border-bottom:0.5px solid rgba(255,255,255,0.06);
+}
+.quick-bar::-webkit-scrollbar{display:none}
+.quick-chip{
+  background:#1a2035;border:0.5px solid rgba(255,255,255,0.1);
+  border-radius:20px;padding:6px 12px;
+  font-size:12px;color:rgba(255,255,255,0.75);
+  white-space:nowrap;cursor:pointer;
+  transition:all 0.2s;flex-shrink:0;
+}
+.quick-chip:hover{background:#243050;border-color:rgba(244,160,58,0.4);color:#f4a03a}
+
+/* Chat */
+#chat{
+  flex:1;overflow-y:auto;padding:14px 14px 8px;
+  display:flex;flex-direction:column;gap:10px;
+}
+#chat::-webkit-scrollbar{width:3px}
+#chat::-webkit-scrollbar-track{background:transparent}
+#chat::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:10px}
+
+.msg{max-width:82%;padding:10px 14px;border-radius:18px;line-height:1.5;font-size:15px}
+.user{
+  background:linear-gradient(135deg,#c45a0a,#f4a03a);
+  align-self:flex-end;border-bottom-right-radius:4px;color:#fff;
+}
+.bot{
+  background:#1a2035;align-self:flex-start;
+  border-bottom-left-radius:4px;color:#e8eaf0;
+}
+.bot ul,.bot ol{margin-left:18px}
+.bot strong{color:#f4a03a}
+.bot a{color:#f4a03a;text-decoration:none}
+.bot a:hover{text-decoration:underline}
+
+/* Barra inferior */
+footer{
+  padding:10px 14px 20px;
+  background:#0f1520;
+  border-top:0.5px solid rgba(255,255,255,0.07);
+  flex-shrink:0;
+}
+.input-row{display:flex;gap:10px;align-items:center}
+#inp{
+  flex:1;background:#1a2035;
+  border:0.5px solid rgba(255,255,255,0.1);
+  border-radius:24px;padding:11px 16px;
+  font-size:15px;color:#fff;
+  font-family:inherit;
+  transition:border-color 0.2s;
+}
+#inp:focus{outline:none;border-color:rgba(244,160,58,0.5)}
+#inp::placeholder{color:rgba(255,255,255,0.3)}
+
+/* Botón mic — grande y visible */
+#micbtn{
+  width:48px;height:48px;border-radius:50%;
+  background:#1a2035;
+  border:2px solid #e8711a;
+  color:#f4a03a;font-size:22px;
+  cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+  position:relative;
+}
+#micbtn:hover{background:#243050;transform:scale(1.05)}
+#micbtn.on{
+  background:linear-gradient(135deg,#e8711a,#f4a03a);
+  border-color:#f4a03a;color:#fff;
+  animation:pulse 1s infinite;
+}
+#micbtn.recording{
+  background:linear-gradient(135deg,#c41a1a,#e84a4a);
+  border-color:#e84a4a;color:#fff;
+}
+/* Anillo de pulso */
+#micbtn.on::before{
+  content:'';position:absolute;
+  width:100%;height:100%;border-radius:50%;
+  background:rgba(232,113,26,0.3);
+  animation:ring 1.5s ease-out infinite;
+}
+@keyframes ring{
+  0%{transform:scale(1);opacity:0.7}
+  100%{transform:scale(1.8);opacity:0}
+}
+@keyframes pulse{
+  0%,100%{opacity:1}50%{opacity:0.7}
+}
+
+#sendbtn{
+  width:48px;height:48px;border-radius:50%;
+  background:linear-gradient(135deg,#e8711a,#f4a03a);
+  border:none;color:#fff;font-size:20px;
+  cursor:pointer;flex-shrink:0;
+  transition:all 0.2s;
+}
+#sendbtn:hover{transform:scale(1.05)}
+#sendbtn:disabled{opacity:0.4;transform:none}
+
+#status{
+  font-size:11px;color:rgba(255,255,255,0.4);
+  text-align:center;margin-top:6px;min-height:14px;
+}
 </style>
 </head>
 <body>
+
 <header>
-  <div class="logo">K</div>
-  <div>
-    <h1>Ke<span>tako</span></h1>
-    <div class="sub">Gipuzkoako laguntzailea</div>
+  <div class="header-left">
+    <div class="logo-icon">K</div>
+    <div class="header-text">
+      <h1>ke<span>tako</span></h1>
+      <div class="sub">Gipuzkoako laguntzailea</div>
+    </div>
+  </div>
+  <div class="header-status">
+    <span class="status-dot"></span>online
   </div>
 </header>
-<div id="chat"></div>
+
+<div class="quick-bar">
+  <div class="quick-chip" onclick="quickSend('Farmazia guardia non dago?')">💊 Farmazia</div>
+  <div class="quick-chip" onclick="quickSend('Zer dago gaur agenda?')">📅 Agenda</div>
+  <div class="quick-chip" onclick="quickSend('Euskotren ordutegia')">🚂 Trenak</div>
+  <div class="quick-chip" onclick="quickSend('Albisteak Gipuzkoa')">📰 Albisteak</div>
+  <div class="quick-chip" onclick="quickSend('Kirol emaitzak')">⚽ Kirola</div>
+</div>
+
+<div id="chat">
+  <div class="msg bot">Kaixo! Ni Ketako naiz, Gipuzkoako laguntzailea. Zer jakin nahi duzu?</div>
+</div>
+
 <footer>
   <div class="input-row">
-    <button id="micbtn" onclick="toggleMic()" title="Hitz egin">🎤</button>
-    <input id="inp" placeholder="Galdetu..." onkeydown="if(event.key==='Enter')send()">
+    <input id="inp" placeholder="Idatzi edo hitz egin..." onkeydown="if(event.key==='Enter')send()">
+    <button id="micbtn" onclick="toggleMic()">🎤</button>
     <button id="sendbtn" onclick="send()">&#10148;</button>
   </div>
   <div id="status"></div>
 </footer>
+
 <script>
-// ── Detección de capacidades ──
 const hasWebSpeech = ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window);
 const hasMediaRecorder = ('MediaRecorder' in window);
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -61,25 +214,23 @@ const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 let rec = null, going = false;
 let mediaRec = null, audioChunks = [];
 
-function setStatus(msg) {
-  document.getElementById('status').textContent = msg;
+function setStatus(msg){ document.getElementById('status').textContent = msg; }
+
+function quickSend(text){
+  document.getElementById('inp').value = text;
+  send();
 }
 
-// ── Toggle micrófono: elige método según dispositivo ──
-function toggleMic() {
-  if (isIOS || !hasWebSpeech) {
-    toggleMediaRecorder();
-  } else {
-    toggleWebSpeech();
-  }
+function toggleMic(){
+  if(isIOS || !hasWebSpeech){ toggleMediaRecorder(); }
+  else { toggleWebSpeech(); }
 }
 
-// ── Método 1: WebSpeechRecognition (Chrome, Android) ──
-function toggleWebSpeech() {
-  if (going) { rec.stop(); return; }
+function toggleWebSpeech(){
+  if(going){ rec.stop(); return; }
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   rec = new SR();
-  rec.lang = 'eu-ES';
+  rec.lang = 'eu-ES,es-ES';
   rec.interimResults = false;
   rec.onstart = () => { going = true; document.getElementById('micbtn').classList.add('on'); setStatus('Entzuten...'); };
   rec.onresult = (e) => { document.getElementById('inp').value = e.results[0][0].transcript; send(); };
@@ -87,17 +238,13 @@ function toggleWebSpeech() {
   rec.start();
 }
 
-// ── Método 2: MediaRecorder + Whisper (iOS Safari, otros) ──
-async function toggleMediaRecorder() {
-  if (going) {
-    mediaRec.stop();
-    return;
-  }
+async function toggleMediaRecorder(){
+  if(going){ mediaRec.stop(); return; }
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     audioChunks = [];
     mediaRec = new MediaRecorder(stream);
-    mediaRec.ondataavailable = (e) => { if (e.data.size > 0) audioChunks.push(e.data); };
+    mediaRec.ondataavailable = (e) => { if(e.data.size > 0) audioChunks.push(e.data); };
     mediaRec.onstop = async () => {
       going = false;
       document.getElementById('micbtn').classList.remove('recording');
@@ -110,46 +257,36 @@ async function toggleMediaRecorder() {
     going = true;
     document.getElementById('micbtn').classList.add('recording');
     setStatus('Grabatzen... Berriz sakatu gelditzeko');
-  } catch(e) {
-    setStatus('Mikrofonoa baimendu behar duzu');
-  }
+  } catch(e){ setStatus('Mikrofonoa baimendu behar duzu'); }
 }
 
-// ── Transcripción via Whisper (Anthropic API) ──
-async function transcribeAudio(blob) {
+async function transcribeAudio(blob){
   try {
-    // Convertir blob a base64
     const arrayBuffer = await blob.arrayBuffer();
     const uint8Array = new Uint8Array(arrayBuffer);
     let binary = '';
     uint8Array.forEach(b => binary += String.fromCharCode(b));
     const base64 = btoa(binary);
-
     const response = await fetch('/api/transcribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ audio: base64, mimeType: blob.type })
     });
     const data = await response.json();
-    if (data.text) {
+    if(data.text){
       document.getElementById('inp').value = data.text;
       setStatus('');
       send();
-    } else {
-      setStatus('Ez da ulertu, saiatu berriro');
-    }
-  } catch(e) {
-    setStatus('Errorea: ' + e.message);
-  }
+    } else { setStatus('Ez da ulertu, saiatu berriro'); }
+  } catch(e){ setStatus('Errorea: ' + e.message); }
 }
 
-// ── Enviar mensaje ──
-async function send() {
+async function send(){
   const i = document.getElementById('inp');
   const b = document.getElementById('sendbtn');
   const c = document.getElementById('chat');
   const t = i.value.trim();
-  if (!t) return;
+  if(!t) return;
   i.value = '';
   b.disabled = true;
   setStatus('');
@@ -162,26 +299,20 @@ async function send() {
   try {
     const r = await fetch('/api/chat', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({message: t})});
     const d = await r.json();
-    const reply = d.reply || d.error || 'Error';
+    const reply = d.reply || d.error || 'Errorea';
     l.innerHTML = marked.parse(reply);
-    // Voz de salida (opcional, si el navegador lo soporta)
     speakReply(reply);
-  } catch(e) {
-    l.textContent = 'Error: ' + e.message;
-  }
+  } catch(e){ l.textContent = 'Error: ' + e.message; }
   c.scrollTop = c.scrollHeight;
   b.disabled = false;
   document.getElementById('inp').focus();
 }
 
-// ── Voz de salida ──
-function speakReply(text) {
-  if (!('speechSynthesis' in window)) return;
-  // Solo habla si el texto es corto (respuesta directa, no programa largo)
+function speakReply(text){
+  if(!('speechSynthesis' in window)) return;
   const plain = text.replace(/[#*\[\]()]/g, '').replace(/https?:\/\/\S+/g, '').trim();
-  if (plain.length > 300) return; // respuestas largas no se leen
+  if(plain.length > 300) return;
   const u = new SpeechSynthesisUtterance(plain);
-  // Detectar idioma: si tiene palabras vascas comunes
   const euWords = ['eus', 'eta', 'dago', 'dira', 'bai', 'ez', 'zer', 'non', 'noiz', 'nola'];
   const isEu = euWords.some(w => plain.toLowerCase().includes(w));
   u.lang = isEu ? 'eu-ES' : 'es-ES';
