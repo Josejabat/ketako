@@ -311,12 +311,23 @@ async function send(){
 function speakReply(text){
   if(!('speechSynthesis' in window)) return;
   const plain = text.replace(/[#*\[\]()]/g, '').replace(/https?:\/\/\S+/g, '').trim();
-  if(plain.length > 300) return;
+  if(plain.length > 500) return;
   const u = new SpeechSynthesisUtterance(plain);
-  const euWords = ['eus', 'eta', 'dago', 'dira', 'bai', 'ez', 'zer', 'non', 'noiz', 'nola'];
-  const isEu = euWords.some(w => plain.toLowerCase().includes(w));
-  u.lang = isEu ? 'eu-ES' : 'es-ES';
-  u.rate = 0.9;
+  const euWords = ['eta','dago','dira','bai','ez','zer','non','noiz','nola','du','da','zen','zuen','den','gradu','bihar','etzi','orain','euria','elurra','haizea','tenperatura','maximoa','minimoa'];
+  const euCount = euWords.filter(w => plain.toLowerCase().includes(w)).length;
+  const isEu = euCount >= 2;
+  const voices = window.speechSynthesis.getVoices();
+  if(isEu){
+    const euVoice = voices.find(v => v.lang.startsWith('eu')) || voices.find(v => v.lang === 'es-ES' && v.name.includes('Monica')) || voices.find(v => v.lang === 'es-ES');
+    if(euVoice) u.voice = euVoice;
+    u.lang = 'es-ES';
+  } else {
+    const esVoice = voices.find(v => v.lang === 'es-ES' && v.name.includes('Monica')) || voices.find(v => v.lang === 'es-ES');
+    if(esVoice) u.voice = esVoice;
+    u.lang = 'es-ES';
+  }
+  u.rate = 0.75;
+  u.pitch = 1.0;
   window.speechSynthesis.speak(u);
 }
 </script>
