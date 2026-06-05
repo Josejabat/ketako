@@ -297,7 +297,7 @@ async function send(){
   c.appendChild(l);
   c.scrollTop = c.scrollHeight;
   try {
-    const r = await fetch('/api/chat', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({message: t})});
+    const isSaludo = ['egun on','buenos dias','buenos días','kaixo','hola','hi','good morning'].some(w => t.toLowerCase().includes(w)); let coords = {}; if(isSaludo && navigator.geolocation){ try{ coords = await new Promise((res)=>navigator.geolocation.getCurrentPosition(p=>res({lat:p.coords.latitude,lon:p.coords.longitude}),()=>res({}),{timeout:3000})); }catch(e){} } const r = await fetch('/api/chat', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({message: t, ...coords})});
     const d = await r.json();
     const reply = d.reply || d.error || 'Errorea';
     l.innerHTML = marked.parse(reply);

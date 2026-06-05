@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   try {
-    const { message } = req.body;
+    const { message, lat: geoLat, lon: geoLon } = req.body;
     if (!message) return res.status(400).json({ error: 'No message' });
     const AK = process.env.ANTHROPIC_API_KEY;
     const BK = process.env.BRAVE_API_KEY;
@@ -43,7 +43,7 @@ export default async function handler(req, res) {
     let fetchUrl = null;
     let searchQuery = null;
     if (isEguraldia) {
-      const mk = Object.keys(muniCoords).find(k => msg2.includes(k)) || 'gipuzkoa';
+      const mk = geoLat ? 'geolocated' : (Object.keys(muniCoords).find(k => msg2.includes(k)) || 'gipuzkoa'); if(mk === 'geolocated'){ muniCoords['geolocated'] = {lat: geoLat, lon: geoLon}; }
       const {lat, lon} = muniCoords[mk];
       try {
         const wr = await fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&current=temperature_2m,precipitation,windspeed_10m,weathercode&hourly=temperature_2m,precipitation_probability,weathercode&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode&timezone=Europe/Madrid&forecast_days=3');
