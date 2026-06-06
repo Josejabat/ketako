@@ -221,16 +221,27 @@ function quickSend(text){
   send();
 }
 
+function unlockAudio(){
+  if(window._audioUnlocked) return;
+  window._audioUnlocked = true;
+  const u = new SpeechSynthesisUtterance('');
+  u.volume = 0;
+  window.speechSynthesis.speak(u);
+}
 function toggleMic(){
-  if(isIOS || !hasWebSpeech){ toggleMediaRecorder(); }
-  else { toggleWebSpeech(); }
+  unlockAudio();
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  const isIOS3 = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  if(hasWebSpeech && !isIOS3){ toggleWebSpeech(); }
+  else { toggleMediaRecorder(); }
 }
 
 function toggleWebSpeech(){
   if(going){ rec.stop(); return; }
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   rec = new SR();
-  rec.lang = 'eu-ES,es-ES';
+  const isIOS2 = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  rec.lang = isIOS2 ? 'es-ES' : 'eu-ES,es-ES';
   rec.interimResults = false;
   rec.onstart = () => { going = true; document.getElementById('micbtn').classList.add('on'); setStatus('Entzuten...'); };
   rec.onresult = (e) => { document.getElementById('inp').value = e.results[0][0].transcript; send(); };
@@ -243,14 +254,15 @@ async function toggleMediaRecorder(){
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     audioChunks = [];
-    mediaRec = new MediaRecorder(stream);
+    const mimeType = MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4' : 'audio/webm';
+    mediaRec = new MediaRecorder(stream, {mimeType});
     mediaRec.ondataavailable = (e) => { if(e.data.size > 0) audioChunks.push(e.data); };
     mediaRec.onstop = async () => {
       going = false;
       document.getElementById('micbtn').classList.remove('recording');
       setStatus('Prozesatzen...');
       stream.getTracks().forEach(t => t.stop());
-      const blob = new Blob(audioChunks, { type: 'audio/webm' });
+      const blob = new Blob(audioChunks, { type: mimeType });
       await transcribeAudio(blob);
     };
     mediaRec.start();
