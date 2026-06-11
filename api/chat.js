@@ -59,7 +59,7 @@ export default async function handler(req, res) {
       const municipio = Object.keys(behagis).find(k => msg2.includes(k));
       if (municipio) { fetchUrl = behagis[municipio]; } else { searchQuery = message + ' site:behagi.eus OR site:euskadi.eus'; }
     } else if (isAO) {
-      fetchUrl = isMU ? 'https://lea-artibaietamutriku.hitza.eus/agenda/gaur/' : isEibar ? 'https://etakitto.eus/debabarrena/asteburuko-agenda/' : (agendaUrls[comarca] || agendaUrls.uk);
+      fetchUrl = isMU ? 'https://lea-artibaietamutriku.hitza.eus/agenda/gaur/' : isEibar ? 'https://etakitto.eus/debabarrena/asteburuko-agenda/' : (agendaUrls[comarca] || ("https://www.kulturklik.euskadi.eus/webkklik00-shagenda/eu/aa58aPublicoWar/agenda/sacarAgendaDia?locale=eu&municipio="+(mk.charAt(0).toUpperCase()+mk.slice(1))));
     } else if (isPI) {
       searchQuery = message + ' resultado 2026 site:naiz.info OR site:berria.eus';
     } else if (isAR) {
