@@ -13,19 +13,19 @@ export default async function handler(req, res) {
     const isES = /\b(el|la|los|las|de|en|que|es|un|una|para|por|con|del|al|hay|si|hoy|resultado|partido|futbol|noticias|final|ayer|farmacia|guardia|agenda|fiestas|renteria|errenteria|orereta|tolosa|zarautz|eibar|elgoibar|horario|tren|cuantos|personas|mayores|quien|hubo|fue|habitantes|poblacion|datos)\b/i.test(msg);
     const lang = isES ? 'SPANISH' : 'BASQUE';
     const msg2 = msg;
-    const isDB = ['elgoibar','eibar','ermua','deba','soraluze','mallabia','mendaro','debabarrena'].some(w => msg2.includes(w));
+    const isDB = ['elgoibar','eibar','ermua','deba','soraluze','mallabia','mendaro','debabarrena','mutriku'].some(w => msg2.includes(w));
     const isDO = ['arrasate','mondragon','bergara','onati','eskoriatza','aretxabaleta'].some(w => msg2.includes(w));
-    const isGO = ['beasain','zumarraga','ordizia','lazkao','goierri'].some(w => msg2.includes(w));
-    const isTL = ['tolosa','ibarra','villabona','tolosaldea'].some(w => msg2.includes(w));
-    const isUR = ['zarautz','zumaia','azpeitia','azkoitia','urola'].some(w => msg2.includes(w));
-    const isBD = ['irun','hondarribia','bidasoa'].some(w => msg2.includes(w));
-    const isOA = ['errenteria','oiartzun','pasaia','lezo'].some(w => msg2.includes(w));
-    const isDS = ['donostia','san sebastian','hernani','lasarte'].some(w => msg2.includes(w));
+    const isGO = ['beasain','zumarraga','ordizia','lazkao','goierri','segura','ataun','zaldibia','ormaiztegi','gabiria','idiazabal','lazkao','olaberria','mutiloa','ezkio','itsaso'].some(w => msg2.includes(w));
+    const isTL = ['tolosa','ibarra','villabona','tolosaldea','andoain','berrobi','baztan','alegia','amezketa','abaltzisketa','aduna','albiztur','alkiza','altzaga','anoeta','belauntza','berastegi','bidania','gaztelu','hernialde','ikaztegieta','irura','larraul','leaburu','lizartza','orendain','orexa','zizurkil','legorreta'].some(w => msg2.includes(w));
+    const isUR = ['zarautz','zumaia','azpeitia','azkoitia','urola','getaria','orio','zestoa','errezil','aia'].some(w => msg2.includes(w));
+    const isBD = ['irun','hondarribia','bidasoa','oiartzun'].some(w => msg2.includes(w));
+    const isOA = ['errenteria','orereta','oiartzun','pasaia','lezo','oarsoaldea','renteria'].some(w => msg2.includes(w));
+    const isDS = ['donostia','san sebastian','hernani','lasarte','astigarraga','urnieta','usurbil','andoain'].some(w => msg2.includes(w));
     const isMU = msg2.includes('mutriku');
     const comarca = isDB?'db':isDO?'dg':isGO?'go':isTL?'tl':isUR?'ur':isBD?'bd':isOA?'oa':isDS?'ds':'uk';
     const DS = isDB?'Debabarrena':isDO?'Debagoiena':isGO?'Goierri':isTL?'Tolosaldea':isUR?'Urola':isBD?'Bidasoa':isOA?'Oarsoaldea':isDS?'Donostia':'Gipuzkoa';
-    const agendaUrls = {db:'https://barrena.eus/agenda/',dg:'https://goiena.eus/',go:'https://goiena.eus/',tl:'https://tolosaldea.hitza.eus/',oa:'https://oarsoaldea.hitza.eus/',ur:'https://zarautzguka.eus/agenda/',bd:'https://bidasoa.hitza.eus/',uk:'https://lea-artibaietamutriku.hitza.eus/agenda/gaur/'};
-    const noticiaUrls = {db:'https://barrena.eus/',eibar:'https://etakitto.eus/',dg:'https://goiena.eus/',go:'https://goiena.eus/',tl:'https://tolosaldea.hitza.eus/',oa:'https://oarsoaldea.hitza.eus/',ur:'https://zarautzguka.eus/agenda/',bd:'https://bidasoa.hitza.eus/',uk:'https://lea-artibaietamutriku.hitza.eus/'};
+    const agendaUrls = {db:'https://barrena.eus/agenda/',dg:'https://goiena.eus/',go:'https://goierri.hitza.eus/agenda/',ds:'https://irutxulo.hitza.eus/agenda/',tl:'https://ataria.eus/',oa:'https://oarsoaldea.hitza.eus/',ur:'https://zarautzguka.eus/agenda/',bd:'https://bidasoa.hitza.eus/',uk:'https://lea-artibaietamutriku.hitza.eus/agenda/gaur/'};
+    const noticiaUrls = {db:'https://barrena.eus/',eibar:'https://etakitto.eus/',dg:'https://goiena.eus/',go:'https://goierri.hitza.eus/',tl:'https://ataria.eus/',oa:'https://oarsoaldea.hitza.eus/',ur:'https://zarautzguka.eus/',bd:'https://bidasoa.hitza.eus/',uk:'https://lea-artibaietamutriku.hitza.eus/'};
     const behagis = {'elgoibar':'https://behagi.eus/eu/adierazleak/elgoibar/p-132/','eibar':'https://behagi.eus/eu/adierazleak/eibar/p-133/','ermua':'https://behagi.eus/eu/adierazleak/ermua/p-134/','deba':'https://behagi.eus/eu/adierazleak/deba/p-135/','soraluze':'https://behagi.eus/eu/adierazleak/soraluze/p-136/','mendaro':'https://behagi.eus/eu/adierazleak/mendaro/p-137/','mallabia':'https://behagi.eus/eu/adierazleak/mallabia/p-138/','arrasate':'https://behagi.eus/eu/adierazleak/arrasate-mondragon/p-139/','mondragon':'https://behagi.eus/eu/adierazleak/arrasate-mondragon/p-139/','bergara':'https://behagi.eus/eu/adierazleak/bergara/p-140/'};
     const muniCoords = {'elgoibar':{lat:43.214,lon:-2.413},'eibar':{lat:43.185,lon:-2.471},'deba':{lat:43.295,lon:-2.351},'arrasate':{lat:43.065,lon:-2.490},'mondragon':{lat:43.065,lon:-2.490},'bergara':{lat:43.118,lon:-2.413},'beasain':{lat:43.045,lon:-2.197},'tolosa':{lat:43.131,lon:-2.074},'zarautz':{lat:43.284,lon:-2.172},'zumaia':{lat:43.296,lon:-2.252},'irun':{lat:43.337,lon:-1.789},'hondarribia':{lat:43.372,lon:-1.796},'donostia':{lat:43.321,lon:-1.984},'mutriku':{lat:43.308,lon:-2.381},'errenteria':{lat:43.312,lon:-1.900},'errenderia':{lat:43.312,lon:-1.900},'orereta':{lat:43.312,lon:-1.900},'renteria':{lat:43.312,lon:-1.900},'legazpi':{lat:43.053,lon:-2.335},'azpeitia':{lat:43.180,lon:-2.268},'azkoitia':{lat:43.177,lon:-2.307},'onati':{lat:43.034,lon:-2.416},'oñati':{lat:43.034,lon:-2.416},'zumarraga':{lat:43.081,lon:-2.314},'ordizia':{lat:43.048,lon:-2.172},'gipuzkoa':{lat:43.215,lon:-2.150}};
     const isEguraldia = ['eguraldia','eguraldi','euraldia','euraldi','tiempo','temperatura','euri','lluvia','elur','nieve','haize','viento','hotza','beroa','laino','lanbro','eguzkia','sol','zerua','eguraldi'].some(w => msg2.includes(w));
@@ -38,9 +38,102 @@ export default async function handler(req, res) {
     const isHB = ['eskubaloia','balonmano'].some(w => msg2.includes(w));
     const isKI = ['kirol','deporte','kirola'].some(w => msg2.includes(w));
     const isTR = ['tren','euskotren','renfe','autobusa','autobus','lurraldebus','ordutegia','horario'].some(w => msg2.includes(w));
-    const isNO = ['noticia','albiste','berri','azken'].some(w => msg2.includes(w));
+    const isNO = ['noticia','albiste','albizteak','berriak','azken','albisteak'].some(w => msg2.includes(w));
+    const isUD = ['baimena','tramite','izapidea','dirulaguntza','errolda','eskaera','zerbitzuak','laguntza','ayuda','subvención','gestión','sala'].some(w => msg2.includes(w));
+    const udalUrls = {
+  'abaltzisketa':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=001&hizkuntza=EU'},
+  'aduna':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=002&hizkuntza=EU'},
+  'aizarnazabal':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=003&hizkuntza=EU'},
+  'albiztur':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=004&hizkuntza=EU'},
+  'alegia':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=005&hizkuntza=EU'},
+  'alkiza':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=006&hizkuntza=EU'},
+  'altzaga':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=007&hizkuntza=EU'},
+  'amezketa':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=008&hizkuntza=EU'},
+  'andoain':{web:'https://www.andoain.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=009&hizkuntza=EU'},
+  'anoeta':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=010&hizkuntza=EU'},
+  'antzuola':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=011&hizkuntza=EU'},
+  'aramaio':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=012&hizkuntza=EU'},
+  'aretxabaleta':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=013&hizkuntza=EU'},
+  'asteasu':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=014&hizkuntza=EU'},
+  'ataun':{web:'https://www.ataun.eus/eu/azala',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=015&hizkuntza=EU'},
+  'aia':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=016&hizkuntza=EU'},
+  'azkoitia':{web:'https://www.azkoitia.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=017&hizkuntza=EU'},
+  'azpeitia':{web:'https://www.azpeitia.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=018&hizkuntza=EU'},
+  'beasain':{web:'https://www.beasain.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=019&hizkuntza=EU'},
+  'beizama':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=020&hizkuntza=EU'},
+  'belauntza':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=021&hizkuntza=EU'},
+  'berastegi':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=022&hizkuntza=EU'},
+  'berrobio':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=023&hizkuntza=EU'},
+  'bidania-goiatz':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=024&hizkuntza=EU'},
+  'zegama':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=025&hizkuntza=EU'},
+  'zerain':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=026&hizkuntza=EU'},
+  'zestoa':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=027&hizkuntza=EU'},
+  'zizurkil':{web:'https://www.zizurkil.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=028&hizkuntza=EU'},
+  'deba':{web:'https://www.deba.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=029&hizkuntza=EU'},
+  'eibar':{web:'https://www.eibar.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=030&hizkuntza=EU'},
+  'elduain':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=031&hizkuntza=EU'},
+  'elgoibar':{web:'https://elgoibar.eus/zerbitzuak/',agenda:'https://elgoibar.eus/agenda/',albisteak:'https://elgoibar.eus/albisteak/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=032&hizkuntza=EU'},
+  'elgeta':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=033&hizkuntza=EU'},
+  'eskoriatza':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=034&hizkuntza=EU'},
+  'ezkio-itsaso':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=035&hizkuntza=EU'},
+  'hondarribia':{web:'https://www.hondarribia.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=036&hizkuntza=EU'},
+  'gaintza':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=037&hizkuntza=EU'},
+  'gabiria':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=038&hizkuntza=EU'},
+  'getaria':{web:'https://www.getaria.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=039&hizkuntza=EU'},
+  'hernani':{web:'https://www.hernani.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=040&hizkuntza=EU'},
+  'hernialde':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=041&hizkuntza=EU'},
+  'ibarra':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=042&hizkuntza=EU'},
+  'idiazabal':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=043&hizkuntza=EU'},
+  'ikaztegieta':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=044&hizkuntza=EU'},
+  'irun':{web:'https://www.irun.org/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=045&hizkuntza=EU'},
+  'irura':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=046&hizkuntza=EU'},
+  'itsasondo':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=047&hizkuntza=EU'},
+  'larraul':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=048&hizkuntza=EU'},
+  'lazkao':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=049&hizkuntza=EU'},
+  'leaburu':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=050&hizkuntza=EU'},
+  'legazpi':{web:'https://www.legazpi.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=051&hizkuntza=EU'},
+  'legorreta':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=052&hizkuntza=EU'},
+  'lezo':{web:'https://www.lezo.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=053&hizkuntza=EU'},
+  'lizartza':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=054&hizkuntza=EU'},
+  'arrasate':{web:'https://www.arrasate-mondragon.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=055&hizkuntza=EU'},
+  'mondragon':{web:'https://www.arrasate-mondragon.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=055&hizkuntza=EU'},
+  'mutriku':{web:'https://www.mutriku.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=056&hizkuntza=EU'},
+  'mutiloa':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=057&hizkuntza=EU'},
+  'olaberria':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=058&hizkuntza=EU'},
+  'orexa':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=059&hizkuntza=EU'},
+  'orio':{web:'https://www.orio.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=060&hizkuntza=EU'},
+  'ormaiztegi':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=061&hizkuntza=EU'},
+  'oiartzun':{web:'https://www.oiartzun.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=062&hizkuntza=EU'},
+  'oñati':{web:'https://www.onati.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=063&hizkuntza=EU'},
+  'pasaia':{web:'https://www.pasaia.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=064&hizkuntza=EU'},
+  'soraluze':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=065&hizkuntza=EU'},
+  'errezil':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=066&hizkuntza=EU'},
+  'errenteria':{web:'https://www.errenteria.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=067&hizkuntza=EU'},
+  'leintz-gatzaga':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=068&hizkuntza=EU'},
+  'donostia':{web:'https://www.donostia.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=069&hizkuntza=EU'},
+  'segura':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=070&hizkuntza=EU'},
+  'tolosa':{web:'https://www.tolosa.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=071&hizkuntza=EU'},
+  'urnieta':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=072&hizkuntza=EU'},
+  'usurbil':{web:'https://www.usurbil.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=073&hizkuntza=EU'},
+  'bergara':{web:'https://www.bergara.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=074&hizkuntza=EU'},
+  'villabona':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=075&hizkuntza=EU'},
+  'ordizia':{web:'https://www.ordizia.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=076&hizkuntza=EU'},
+  'urretxu':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=077&hizkuntza=EU'},
+  'zaldibia':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=078&hizkuntza=EU'},
+  'zarautz':{web:'https://www.zarautz.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=079&hizkuntza=EU'},
+  'zumarraga':{web:'https://www.zumarraga.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=080&hizkuntza=EU'},
+  'zumaia':{web:'https://www.zumaia.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=081&hizkuntza=EU'},
+  'mendaro':{web:'https://mendaro.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=082&hizkuntza=EU'},
+  'lasarte-oria':{web:'https://www.lasarte-oria.eus/eu/',egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=083&hizkuntza=EU'},
+  'astigarraga':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=084&hizkuntza=EU'},
+  'baliarrain':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=085&hizkuntza=EU'},
+  'orendain':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=086&hizkuntza=EU'},
+  'altzaga':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=087&hizkuntza=EU'},
+  'gazteluko':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=088&hizkuntza=EU'}
+};
     let ctx = '';
     let fetchUrl = null;
+    let fetchUrls = null;
     let searchQuery = null;
     if (isEguraldia) {
       const mk = geoLat ? 'geolocated' : (Object.keys(muniCoords).find(k => msg2.includes(k)) || 'gipuzkoa'); if(mk === 'geolocated'){ muniCoords['geolocated'] = {lat: geoLat, lon: geoLon}; }
@@ -59,7 +152,10 @@ export default async function handler(req, res) {
       const municipio = Object.keys(behagis).find(k => msg2.includes(k));
       if (municipio) { fetchUrl = behagis[municipio]; } else { searchQuery = message + ' site:behagi.eus OR site:euskadi.eus'; }
     } else if (isAO) {
-      fetchUrl = isMU ? 'https://lea-artibaietamutriku.hitza.eus/agenda/gaur/' : isEibar ? 'https://etakitto.eus/debabarrena/asteburuko-agenda/' : (agendaUrls[comarca] || ("https://www.kulturklik.euskadi.eus/webkklik00-shagenda/eu/aa58aPublicoWar/agenda/sacarAgendaDia?locale=eu&municipio="+(mk.charAt(0).toUpperCase()+mk.slice(1))));
+      const mkAO = Object.keys(udalUrls).find(k => msg2.includes(k)) || (Object.keys(muniCoords).find(k => msg2.includes(k)) || 'gipuzkoa');
+      const udalAgenda = udalUrls[mkAO] ? (udalUrls[mkAO].agenda || udalUrls[mkAO].web) : null;
+      const comarcaAgenda = agendaUrls[comarca] || ("https://www.kulturklik.euskadi.eus/webkklik00-shagenda/eu/aa58aPublicoWar/agenda/sacarAgendaDia?locale=eu&municipio="+(mkAO.charAt(0).toUpperCase()+mkAO.slice(1)));
+      fetchUrls = [udalAgenda, comarcaAgenda].filter((v,i,a) => v && a.indexOf(v)===i);
     } else if (isPI) {
       searchQuery = message + ' resultado 2026 site:naiz.info OR site:berria.eus';
     } else if (isAR) {
@@ -77,10 +173,24 @@ export default async function handler(req, res) {
     } else if (isNO) {
       const nurl = isMU ? 'https://lea-artibaietamutriku.hitza.eus/' : (noticiaUrls[comarca] || null);
       if (nurl) { fetchUrl = nurl; } else { searchQuery = message + ' site:naiz.info OR site:berria.eus OR site:orain.eus'; }
+    } else if (isUD) {
+      const uMk = Object.keys(udalUrls).find(k => msg2.includes(k));
+      if (uMk) { searchQuery = message + ' 2026 site:' + (udalUrls[uMk].web || '').replace('https://','').replace('http://','').split('/')[0]; } else { searchQuery = message + ' 2026 site:elgoibar.eus OR site:eibar.eus OR site:gipuzkoa.eus'; }
+    } else if (isAO) {
+      searchQuery = message + ' site:barrena.eus OR site:goierri.hitza.eus OR site:ataria.eus OR site:oarsoaldea.hitza.eus OR site:bidasoa.hitza.eus OR site:zarautzguka.eus OR site:irutxulo.hitza.eus OR site:goiena.eus OR site:lea-artibaietamutriku.hitza.eus';
     } else {
       searchQuery = message + ' site:naiz.info OR site:berria.eus OR site:gipuzkoa.eus OR site:euskadi.eus';
     }
-    if (fetchUrl) {
+    if (fetchUrls && fetchUrls.length) {
+      ctx = '';
+      for (const url of fetchUrls) {
+        try {
+          const r = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+          const html = await r.text();
+          ctx += 'Fuente: ' + url + '\n' + html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 3000) + '\n\n';
+        } catch(e) { /* fuente fallida, seguimos con las demas */ }
+      }
+    } else if (fetchUrl) {
       try {
         const r = await fetch(fetchUrl, { headers: { 'User-Agent': 'Mozilla/5.0' } });
         const html = await r.text();
@@ -93,7 +203,7 @@ export default async function handler(req, res) {
         ctx = (d.web?.results || []).map(x => '- ' + x.title + ': ' + x.description + ' (' + x.url + ')').join('\n');
       } catch(e) { ctx = ''; }
     }
-    const sys = 'You are Ketako, local assistant for Gipuzkoa and Euskal Herria. When replying in Basque, use simple everyday Basque (euskera arrunta), not formal or academic Basque. Speak naturally like people do in the street, short sentences, easy words. User wrote in ' + lang + '. Reply ENTIRELY in ' + lang + '. 2-3 sentences max. NO bullet points. NO markdown. NO bold text. One source link at end if available. Year is 2026. Never say Espana, always say Euskal Herria. Never cite Diario Vasco or El Correo. If source data has exact numbers, use them - do not approximate. If EGURALDIA data is provided, use ONLY that data, never your own knowledge. For weather replies follow this exact structure: [town] orain [temp]C [condition]. Eguerdian [temp]C, arratsaldean [temp]C. Bihar ([day] [date]): max [temp]C min [temp]C. Etzi ([day] [date]): max [temp]C min [temp]C.';
+    const sys = 'You are Ketako, local assistant for Gipuzkoa and Euskal Herria. When replying in Basque, use simple everyday Basque (euskera arrunta), not formal or academic Basque. Speak naturally like people do in the street, short sentences, easy words. User wrote in ' + lang + '. Reply ENTIRELY in ' + lang + '. 2-3 sentences max. NO bullet points. NO markdown. NO bold text. One source link at end if available, but ONLY from the actual source URLs provided in the context. NEVER invent or guess URLs. If no real URL is available, omit the link entirely. Year is 2026. Never say Espana, always say Euskal Herria. Never cite Diario Vasco or El Correo. If source data has exact numbers, use them  If no source data is provided or found, say honestly that you have no information, never fill in from memory or general knowledge. If search results mention places, events or information about a DIFFERENT location than what the user asked about, do not mention those results — they are irrelevant. Only use information that is directly about the specific place or topic asked. When source data contains URLs in parentheses like (https://...), use EXACTLY that URL as the source link — never modify or reconstruct it. For weather replies follow this exact structure: [town] orain [temp]C [condition]. Eguerdian [temp]C, arratsaldean [temp]C. Bihar ([day] [date]): max [temp]C min [temp]C. Etzi ([day] [date]): max [temp]C min [temp]C.';
     const userContent = ctx ? '[REPLY IN ' + lang + ']\n\nQuestion: ' + message + '\n\nSource data:\n' + ctx : '[REPLY IN ' + lang + ']\n\nQuestion: ' + message;
     const r2 = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-api-key': AK, 'anthropic-version': '2023-06-01' }, body: JSON.stringify({ model: 'claude-opus-4-5', max_tokens: 300, system: sys, messages: [{ role: 'user', content: userContent }] }) });
     const d2 = await r2.json();
