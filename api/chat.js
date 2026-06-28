@@ -179,7 +179,8 @@ export default async function handler(req, res) {
     } else if (isAO) {
       searchQuery = message + ' site:barrena.eus OR site:goierri.hitza.eus OR site:ataria.eus OR site:oarsoaldea.hitza.eus OR site:bidasoa.hitza.eus OR site:zarautzguka.eus OR site:irutxulo.hitza.eus OR site:goiena.eus OR site:lea-artibaietamutriku.hitza.eus';
     } else {
-      searchQuery = message + ' site:naiz.info OR site:berria.eus OR site:gipuzkoa.eus OR site:euskadi.eus';
+      searchQuery = message + ' Gipuzkoa 2026 site:barrena.eus OR site:goierri.hitza.eus OR site:ataria.eus OR site:etakitto.eus OR site:oarsoaldea.hitza.eus OR site:bidasoa.hitza.eus OR site:naiz.info OR site:berria.eus';
+      fetchUrls = ['https://barrena.eus'];
     }
     if (fetchUrls && fetchUrls.length) {
       ctx = '';
@@ -194,7 +195,7 @@ export default async function handler(req, res) {
       try {
         const r = await fetch(fetchUrl, { headers: { 'User-Agent': 'Mozilla/5.0' } });
         const html = await r.text();
-        ctx = 'Fuente: ' + fetchUrl + '\n' + html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 6000);
+        ctx = 'Fuente: ' + fetchUrl + '\n' + html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 8000);
       } catch(e) { ctx = 'Error: ' + fetchUrl; }
     } else if (searchQuery && BK) {
       try {
