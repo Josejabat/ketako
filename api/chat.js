@@ -180,7 +180,23 @@ export default async function handler(req, res) {
       searchQuery = message + ' site:barrena.eus OR site:goierri.hitza.eus OR site:ataria.eus OR site:oarsoaldea.hitza.eus OR site:bidasoa.hitza.eus OR site:zarautzguka.eus OR site:irutxulo.hitza.eus OR site:goiena.eus OR site:lea-artibaietamutriku.hitza.eus';
     } else {
       searchQuery = message + ' Gipuzkoa 2026 site:barrena.eus OR site:goierri.hitza.eus OR site:ataria.eus OR site:etakitto.eus OR site:oarsoaldea.hitza.eus OR site:bidasoa.hitza.eus OR site:naiz.info OR site:berria.eus';
-      fetchUrls = ['https://barrena.eus'];
+      const prentsaSekzioak = {
+        // Debabarrena - barrena.eus
+        'elgoibar':'https://barrena.eus/elgoibar/','eibar':'https://barrena.eus/eibar/','deba':'https://barrena.eus/deba/','soraluze':'https://barrena.eus/soraluze/','mendaro':'https://barrena.eus/mendaro/','mutriku':'https://barrena.eus/mutriku/','ermua':'https://barrena.eus/ermua/',
+        // Goierri - goierri.hitza.eus
+        'beasain':'https://goierri.hitza.eus/beasain/','zumarraga':'https://goierri.hitza.eus/zumarraga/','ordizia':'https://goierri.hitza.eus/ordizia/','lazkao':'https://goierri.hitza.eus/lazkao/','ataun':'https://goierri.hitza.eus/ataun/','segura':'https://goierri.hitza.eus/segura/','zaldibia':'https://goierri.hitza.eus/zaldibia/',
+        // Tolosaldea - ataria.eus
+        'tolosa':'https://ataria.eus/tolosa/','ibarra':'https://ataria.eus/ibarra/','villabona':'https://ataria.eus/villabona/','andoain':'https://ataria.eus/andoain/','zizurkil':'https://ataria.eus/zizurkil/','legorreta':'https://ataria.eus/legorreta/',
+        // Oarsoaldea
+        'errenteria':'https://oarsoaldea.hitza.eus/errenteria/','pasaia':'https://oarsoaldea.hitza.eus/pasaia/','oiartzun':'https://oarsoaldea.hitza.eus/oiartzun/','lezo':'https://oarsoaldea.hitza.eus/lezo/',
+        // Bidasoa
+        'irun':'https://bidasoa.hitza.eus/irun/','hondarribia':'https://bidasoa.hitza.eus/hondarribia/',
+        // Urola
+        'zarautz':'https://zarautzguka.eus/','zumaia':'https://zarautzguka.eus/zumaia/','azpeitia':'https://zarautzguka.eus/azpeitia/','azkoitia':'https://zarautzguka.eus/azkoitia/',
+      };
+      const mkAOelse = Object.keys(prentsaSekzioak).find(k => msg2.includes(k));
+      const prentsaUrl = mkAOelse ? prentsaSekzioak[mkAOelse] : 'https://barrena.eus';
+      fetchUrls = [prentsaUrl];
     }
     if (fetchUrls && fetchUrls.length) {
       ctx = '';
