@@ -156,7 +156,7 @@ export default async function handler(req, res) {
       const udalAgenda = udalUrls[mkAO] ? (udalUrls[mkAO].agenda || udalUrls[mkAO].web) : null;
       const comarcaAgenda = agendaUrls[comarca] || ("https://www.kulturklik.euskadi.eus/webkklik00-shagenda/eu/aa58aPublicoWar/agenda/sacarAgendaDia?locale=eu&municipio="+(mkAO.charAt(0).toUpperCase()+mkAO.slice(1)));
       fetchUrls = [udalAgenda, comarcaAgenda].filter((v,i,a) => v && a.indexOf(v)===i);
-      const prentsaAO = {'elgoibar':'https://barrena.eus/elgoibar/','eibar':'https://barrena.eus/eibar/','deba':'https://barrena.eus/deba/','soraluze':'https://barrena.eus/soraluze/','mendaro':'https://barrena.eus/mendaro/','mutriku':'https://barrena.eus/mutriku/','ermua':'https://barrena.eus/ermua/','beasain':'https://goierri.hitza.eus/herriak/beasain/','zumarraga':'https://goierri.hitza.eus/herriak/zumarraga/','ordizia':'https://goierri.hitza.eus/herriak/ordizia/','lazkao':'https://goierri.hitza.eus/herriak/lazkao/','ataun':'https://goierri.hitza.eus/herriak/ataun/','segura':'https://goierri.hitza.eus/herriak/segura/','zaldibia':'https://goierri.hitza.eus/herriak/zaldibia/','tolosa':'https://ataria.eus/tolosa/','ibarra':'https://ataria.eus/ibarra/','villabona':'https://ataria.eus/villabona/','andoain':'https://ataria.eus/andoain/','zizurkil':'https://ataria.eus/zizurkil/','legorreta':'https://ataria.eus/legorreta/','errenteria':'https://oarsoaldea.hitza.eus/','pasaia':'https://oarsoaldea.hitza.eus/herriak/pasaia/','oiartzun':'https://oarsoaldea.hitza.eus/herriak/oiartzun/','lezo':'https://oarsoaldea.hitza.eus/herriak/lezo/','irun':'https://bidasoa.hitza.eus/herriak/irun/','hondarribia':'https://bidasoa.hitza.eus/herriak/hondarribia/','zarautz':'https://zarautzguka.eus/','zumaia':'https://zarautzguka.eus/','azpeitia':'https://zarautzguka.eus/','azkoitia':'https://zarautzguka.eus/','usurbil':'https://noaua.eus/usurbil/','hernani':'https://noaua.eus/','lasarte':'https://noaua.eus/','urnieta':'https://noaua.eus/','astigarraga':'https://noaua.eus/'};
+      const prentsaAO = {'elgoibar':'https://barrena.eus/elgoibar/','eibar':'https://barrena.eus/eibar/','deba':'https://barrena.eus/deba/','soraluze':'https://barrena.eus/soraluze/','mendaro':'https://barrena.eus/mendaro/','mutriku':'https://barrena.eus/mutriku/','ermua':'https://barrena.eus/ermua/','tolosa':'https://ataria.eus/tolosa/','ibarra':'https://ataria.eus/ibarra/','villabona':'https://ataria.eus/villabona/','andoain':'https://ataria.eus/andoain/','zizurkil':'https://ataria.eus/zizurkil/','legorreta':'https://ataria.eus/legorreta/','zarautz':'https://zarautzguka.eus/','zumaia':'https://zarautzguka.eus/','azpeitia':'https://zarautzguka.eus/','azkoitia':'https://zarautzguka.eus/','usurbil':'https://noaua.eus/usurbil/','hernani':'https://noaua.eus/','lasarte':'https://noaua.eus/','urnieta':'https://noaua.eus/','astigarraga':'https://noaua.eus/'};
       const mkAOprensa = Object.keys(prentsaAO).find(k => msg2.includes(k));
       if (mkAOprensa) fetchUrls = [prentsaAO[mkAOprensa]];
     } else if (isPI) {
@@ -187,13 +187,13 @@ export default async function handler(req, res) {
         // Debabarrena - barrena.eus
         'elgoibar':'https://barrena.eus/elgoibar/','eibar':'https://barrena.eus/eibar/','deba':'https://barrena.eus/deba/','soraluze':'https://barrena.eus/soraluze/','mendaro':'https://barrena.eus/mendaro/','mutriku':'https://barrena.eus/mutriku/','ermua':'https://barrena.eus/ermua/',
         // Goierri - goierri.hitza.eus (URL: /herriak/municipio/)
-        'beasain':'https://goierri.hitza.eus/herriak/beasain/','zumarraga':'https://goierri.hitza.eus/herriak/zumarraga/','ordizia':'https://goierri.hitza.eus/herriak/ordizia/','lazkao':'https://goierri.hitza.eus/herriak/lazkao/','ataun':'https://goierri.hitza.eus/herriak/ataun/','segura':'https://goierri.hitza.eus/herriak/segura/','zaldibia':'https://goierri.hitza.eus/herriak/zaldibia/',
+        
         // Tolosaldea - ataria.eus
         'tolosa':'https://ataria.eus/tolosa/','ibarra':'https://ataria.eus/ibarra/','villabona':'https://ataria.eus/villabona/','andoain':'https://ataria.eus/andoain/','zizurkil':'https://ataria.eus/zizurkil/','legorreta':'https://ataria.eus/legorreta/',
         // Oarsoaldea - /herriak/municipio/ (errenteria usa portada)
-        'errenteria':'https://oarsoaldea.hitza.eus/','pasaia':'https://oarsoaldea.hitza.eus/herriak/pasaia/','oiartzun':'https://oarsoaldea.hitza.eus/herriak/oiartzun/','lezo':'https://oarsoaldea.hitza.eus/herriak/lezo/',
+        
         // Bidasoa - /herriak/municipio/
-        'irun':'https://bidasoa.hitza.eus/herriak/irun/','hondarribia':'https://bidasoa.hitza.eus/herriak/hondarribia/',
+        
         // Urola - zarautzguka.eus
         'zarautz':'https://zarautzguka.eus/','zumaia':'https://zarautzguka.eus/','azpeitia':'https://zarautzguka.eus/','azkoitia':'https://zarautzguka.eus/',
         // Donostialdea - noaua.eus
