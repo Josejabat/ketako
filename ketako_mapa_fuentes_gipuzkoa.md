@@ -56,3 +56,13 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - No inventar/mapear URLs sin verificarlas antes con: curl -s URL | limpieza HTML
 - No parchear caso a caso sin mirar los 4 mapas: cambiar uno no cambia el comportamiento si la pregunta entra por otro
 - Cada sesión: leer este documento ANTES de tocar código, y actualizarlo DESPUÉS con commit
+
+## 5. SESION 2026-07-04 — IMPLEMENTADO Y DESPLEGADO
+- Paso 1 (5940b0b): mapa unico ITURRIAK, red GUKA en Urola, etakitto, udalas, hitza.eus fuera del fetch
+- Pasos 3-4 (7102af3): sin fallback barrena (desconocidos -> Brave), contexto 3000->6000
+- VERIFICADO en ketako.eus: Zumaia->baleike OK, Zizurkil->ataria OK, Elgoibar OK, Donostia->Brave OK (lento pero correcto), Errenteria OK (evento real via kulturklik), preguntas sin respuesta -> honesto + enlace (correcto)
+- CANDIDATA ESTRELLA: kulturklik.euskadi.eus — agenda cultural GV, URL parametrizable por municipio
+  (sacarAgendaDia?locale=eu&municipio=X). Aparecio sola 3 veces en pruebas. Si fetcheable: agenda directa para TODOS los municipios
+- CONFIRMADO problema deteccion: "debegoienanastebururako" (erratas/palabras pegadas) no reconoce comarca.
+  Solucion futura: normalizar texto antes de includes(). Usuarios mayores escribiran asi
+- PENDIENTE proxima sesion: 1) verificar kulturklik con curl 2) normalizacion erratas 3) URL Irun 4) Goierri 5) hemeroteca
