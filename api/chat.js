@@ -188,8 +188,8 @@ export default async function handler(req, res) {
     } else if (isKI) {
       searchQuery = message + ' resultado 2026 ' + DS;
     } else if (isTR) {
-      if (msg2.includes('euskotren')) { fetchUrl = 'https://www.euskotren.eus/es/tren/horarios'; }
-      else if (msg2.includes('renfe')) { fetchUrl = 'https://www.renfe.com/es/es/cercanias/cercanias-pais-vasco/horarios'; }
+      if (msg2.includes('tren') || msg2.includes('euskotren') || msg2.includes('renfe')) { fetchUrls = ['https://www.euskotren.eus/es/tren/horarios', 'https://www.renfe.com/es/es/cercanias/cercanias-pais-vasco/horarios']; }
+      
       else { searchQuery = message + ' site:lurraldebus.eus OR site:euskotren.eus'; }
     } else if (isNO) {
       const nurl = isMU ? 'https://lea-artibaietamutriku.hitza.eus/' : (noticiaUrls[comarca] || null);
