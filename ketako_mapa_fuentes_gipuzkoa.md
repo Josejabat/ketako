@@ -3,13 +3,26 @@ Actualizado: 2026-07-04. Leer SIEMPRE antes de tocar api/chat.js.
 
 ## 1. FUENTES VERIFICADAS (con curl + limpieza HTML)
 
-### Fetcheables ✅ (contenido real en el HTML)
-| Fuente | Comarca | URL patrón | Notas |
+### Fetcheables ✅ VERIFICADO 2026-07-04 (curl + limpieza, contenido real con fechas)
+| Fuente | Cubre | URL verificada | Notas |
 |---|---|---|---|
-| barrena.eus | Debabarrena | barrena.eus/MUNICIPIO/ | elgoibar, eibar, deba, soraluze, mendaro, mutriku, ermua. Solo portada de hoy. Buscador ?s= NO filtra (confirmado) |
-| ataria.eus | Tolosaldea | ataria.eus/MUNICIPIO/ | tolosa, ibarra, villabona, andoain, zizurkil, legorreta |
-| noaua.eus | Donostialdea rural | noaua.eus/usurbil/ | Solo Usurbil tiene URL propia; hernani/lasarte/urnieta/astigarraga caen a portada general |
-| hernani.eus/eu/albisteak | Ayuntamiento | — | Verificado con contenido real. Modelo a replicar en otros ayuntamientos |
+| barrena.eus | Debabarrena | barrena.eus/MUNICIPIO/ | Solo portada hoy. ?s= no filtra |
+| etakitto.eus | Eibar + Debabarrena | etakitto.eus/albisteak | Noticias con fechas. Tiene seccion Debabarrena |
+| ataria.eus | Tolosaldea | ataria.eus/MUNICIPIO/ | |
+| noaua.eus | Usurbil | noaua.eus/usurbil/ | Resto Donostialdea rural: solo portada general |
+| zarautzguka.eus | Zarautz | zarautzguka.eus/zarautz/ | Red GUKA. Noticias + AGENDA con horas |
+| baleike.eus | Zumaia | baleike.eus | Red GUKA (Zumaiaguka). Noticias + agenda |
+| uztarria.eus | Azpeitia | uztarria.eus | Red GUKA (Azpeitiaguka). Menu con Farmaziak, Hemeroteka |
+| maxixatzen.eus | Azkoitia | maxixatzen.eus | Red GUKA (Azkoitiaguka). Menu con Eguraldia |
+| karkara.eus | Orio + Aia | karkara.eus | Red GUKA (Orioguka) |
+| elgoibar.eus | Elgoibar (udala) | elgoibar.eus/eu/albisteak | Noticias municipales reales |
+| errenteria.eus | Errenteria (udala) | errenteria.eus/eu/albisteak | HTML real 11k chars PERO mucho menu: noticias mas alla del corte de 3000 |
+| hernani.eus | Hernani (udala) | hernani.eus/eu/albisteak | Verificado sesion anterior |
+
+DESCUBRIMIENTO CLAVE: red GUKA (zarautzguka/baleike/uztarria/maxixatzen/karkara) = misma plataforma,
+todas fetcheables, con Agenda y Hemeroteka propias. Urola COMPLETA cubierta municipio a municipio.
+ERROR CORREGIDO: zarautzguka NO cubre Zumaia/Azpeitia/Azkoitia (cada una tiene su GUKA).
+OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 
 ### NO fetcheables ❌ (JS-rendered, HTML basura — confirmado con curl)
 - goierri.hitza.eus, oarsoaldea.hitza.eus, bidasoa.hitza.eus, irutxulo.hitza.eus
@@ -17,9 +30,9 @@ Actualizado: 2026-07-04. Leer SIEMPRE antes de tocar api/chat.js.
 - Para estas comarcas: Brave Search con site: (NO fetch directo)
 
 ### Pendientes de verificar ⏳
-- etakitto.eus (Eibar/Ermua) — segunda fuente Debabarrena, trabajada antes, URL sin confirmar con curl
-- zarautzguka.eus (Urola) — mapeada pero nunca verificado su contenido con curl limpio
-- Ayuntamientos restantes: elgoibar.eus, errenteria.eus, zumarraga.eus, irun.org... ¿patrón /eu/albisteak? ¿fetcheables o JS?
+- irun.org/eu/albisteak da 404: buscar URL correcta noticias Irun (Bidasoa sigue sin fuente)
+- Ayuntamientos Goierri: beasain.eus, ordizia.eus, zumarraga.eus... sin verificar (Goierri sigue sin fuente)
+- Donostia centro: sin fuente
 - Fuente única provincial (Diputación, agenda cultural Gipuzkoa)
 
 ## 2. ARQUITECTURA ACORDADA (direccionamiento)
@@ -34,7 +47,8 @@ Actualizado: 2026-07-04. Leer SIEMPRE antes de tocar api/chat.js.
 - agendaUrls y noticiaUrls AÚN contienen hitza.eus para fetch (inútil)
 - Fallback genérico = barrena.eus para municipios no mapeados → respuestas incorrectas fuera de Debabarrena
 - Detección por msg2.includes(municipio): frágil ante variantes de pregunta
-- Goierri, Oarsoaldea, Bidasoa, Donostia centro: SIN fuente de fetch real
+- Goierri, Bidasoa, Donostia centro: SIN fuente de fetch real (Oarsoaldea resuelta via errenteria.eus)
+- chat.js corta ctx a substring(0,3000): en webs con mucho menu (errenteria.eus) las noticias quedan FUERA del corte. Subir limite o recortar menu
 
 ## 4. QUÉ NO REPETIR
 - No fetchear hitza.eus (JS)
