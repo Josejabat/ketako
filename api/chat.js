@@ -213,7 +213,23 @@ export default async function handler(req, res) {
         try {
           const r = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
           const html = await r.text();
-          ctx += 'Fuente: ' + url + '\n' + html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 6000) + '\n\n';
+          let testua = html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+          if (url.includes('kulturklik')) {
+            const herriIzenak = ['Elgoibar','Eibar','Deba','Soraluze','Mendaro','Mutriku','Ermua','Tolosa','Ibarra','Villabona','Andoain','Zizurkil','Legorreta','Zarautz','Zumaia','Azpeitia','Azkoitia','Orio','Aia','Usurbil','Hernani','Lasarte','Urnieta','Astigarraga','Errenteria','Pasaia','Oiartzun','Lezo','Irun','Hondarribia','Beasain','Ordizia','Lazkao','Zumarraga','Urretxu','Legazpi','Ataun','Segura','Zaldibia','Donostia','Arrasate','Bergara','Elgeta','Antzuola','Aretxabaleta','Eskoriatza'];
+            const kera = herriIzenak.filter(h => msg2.includes(h.toLowerCase()));
+            if (kera.length) {
+              let zatiak = '';
+              for (const h of kera) {
+                let i = 0;
+                while ((i = testua.indexOf('[' + h, i)) !== -1 && zatiak.length < 5000) {
+                  zatiak += '... ' + testua.substring(Math.max(0, i - 220), i + 120) + '\n';
+                  i += 1;
+                }
+              }
+              testua = zatiak || 'Ez dago gaurko ekitaldirik kulturklik-en herri horretarako.';
+            } else { testua = testua.substring(0, 3000); }
+          }
+          ctx += 'Fuente: ' + url + '\n' + testua.substring(0, 6000) + '\n\n';
         } catch(e) { /* fuente fallida, seguimos con las demas */ }
       }
     } else if (fetchUrl) {
