@@ -216,7 +216,7 @@ export default async function handler(req, res) {
         else { fetchUrls = null; searchQuery = message + ' Gipuzkoa 2026 site:naiz.info OR site:berria.eus OR site:goierri.hitza.eus OR site:bidasoa.hitza.eus OR site:irutxulo.hitza.eus'; }
     }
     if (fetchUrls && fetchUrls.length) {
-      ctx = '';
+      ctx = ctx || '';
       for (const url of fetchUrls) {
         try {
           const r = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
