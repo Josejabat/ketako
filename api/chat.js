@@ -24,8 +24,26 @@ export default async function handler(req, res) {
     const isMU = msg2.includes('mutriku');
     const comarca = isDB?'db':isDO?'dg':isGO?'go':isTL?'tl':isUR?'ur':isBD?'bd':isOA?'oa':isDS?'ds':'uk';
     const DS = isDB?'Debabarrena':isDO?'Debagoiena':isGO?'Goierri':isTL?'Tolosaldea':isUR?'Urola':isBD?'Bidasoa':isOA?'Oarsoaldea':isDS?'Donostia':'Gipuzkoa';
-    const agendaUrls = {db:'https://barrena.eus/agenda/',dg:'https://goiena.eus/',go:'https://goierri.hitza.eus/agenda/',ds:'https://irutxulo.hitza.eus/agenda/',tl:'https://ataria.eus/',oa:'https://oarsoaldea.hitza.eus/',ur:'https://zarautzguka.eus/agenda/',bd:'https://bidasoa.hitza.eus/',uk:'https://lea-artibaietamutriku.hitza.eus/agenda/gaur/'};
-    const noticiaUrls = {db:'https://barrena.eus/',eibar:'https://etakitto.eus/',dg:'https://goiena.eus/',go:'https://goierri.hitza.eus/',tl:'https://ataria.eus/',oa:'https://oarsoaldea.hitza.eus/',ur:'https://zarautzguka.eus/',bd:'https://bidasoa.hitza.eus/',uk:'https://lea-artibaietamutriku.hitza.eus/'};
+    const ITURRIAK = {
+      // MAPA UNICO DE FUENTES — solo URLs verificadas (ver ketako_mapa_fuentes_gipuzkoa.md)
+      municipios: {
+        // Debabarrena — barrena.eus
+        'elgoibar':'https://barrena.eus/elgoibar/','eibar':'https://barrena.eus/eibar/','deba':'https://barrena.eus/deba/','soraluze':'https://barrena.eus/soraluze/','mendaro':'https://barrena.eus/mendaro/','mutriku':'https://barrena.eus/mutriku/','ermua':'https://barrena.eus/ermua/',
+        // Tolosaldea — ataria.eus
+        'tolosa':'https://ataria.eus/tolosa/','ibarra':'https://ataria.eus/ibarra/','villabona':'https://ataria.eus/villabona/','andoain':'https://ataria.eus/andoain/','zizurkil':'https://ataria.eus/zizurkil/','legorreta':'https://ataria.eus/legorreta/',
+        // Urola — red GUKA, cada municipio su web
+        'zarautz':'https://zarautzguka.eus/zarautz/','zumaia':'https://baleike.eus','azpeitia':'https://uztarria.eus','azkoitia':'https://maxixatzen.eus','orio':'https://karkara.eus','aia':'https://karkara.eus',
+        // Donostialdea rural — noaua + udala Hernani
+        'usurbil':'https://noaua.eus/usurbil/','hernani':'https://hernani.eus/eu/albisteak','lasarte':'https://noaua.eus/','urnieta':'https://noaua.eus/','astigarraga':'https://noaua.eus/',
+        // Oarsoaldea — udala Errenteria
+        'errenteria':'https://www.errenteria.eus/eu/albisteak'
+      },
+      // Por comarca. SIN hitza.eus: Goierri/Bidasoa/Donostia/lea-artibai sin clave => cae a Brave
+      agenda: {db:'https://barrena.eus/agenda/',dg:'https://goiena.eus/',tl:'https://ataria.eus/',ur:'https://zarautzguka.eus/agenda/',oa:'https://www.errenteria.eus/eu/albisteak'},
+      noticias: {db:'https://barrena.eus/',eibar:'https://etakitto.eus/albisteak',dg:'https://goiena.eus/',tl:'https://ataria.eus/',ur:'https://zarautzguka.eus/zarautz/',oa:'https://www.errenteria.eus/eu/albisteak'}
+    };
+    const agendaUrls = ITURRIAK.agenda;
+    const noticiaUrls = ITURRIAK.noticias;
     const behagis = {'elgoibar':'https://behagi.eus/eu/adierazleak/elgoibar/p-132/','eibar':'https://behagi.eus/eu/adierazleak/eibar/p-133/','ermua':'https://behagi.eus/eu/adierazleak/ermua/p-134/','deba':'https://behagi.eus/eu/adierazleak/deba/p-135/','soraluze':'https://behagi.eus/eu/adierazleak/soraluze/p-136/','mendaro':'https://behagi.eus/eu/adierazleak/mendaro/p-137/','mallabia':'https://behagi.eus/eu/adierazleak/mallabia/p-138/','arrasate':'https://behagi.eus/eu/adierazleak/arrasate-mondragon/p-139/','mondragon':'https://behagi.eus/eu/adierazleak/arrasate-mondragon/p-139/','bergara':'https://behagi.eus/eu/adierazleak/bergara/p-140/'};
     const muniCoords = {'elgoibar':{lat:43.214,lon:-2.413},'eibar':{lat:43.185,lon:-2.471},'deba':{lat:43.295,lon:-2.351},'arrasate':{lat:43.065,lon:-2.490},'mondragon':{lat:43.065,lon:-2.490},'bergara':{lat:43.118,lon:-2.413},'beasain':{lat:43.045,lon:-2.197},'tolosa':{lat:43.131,lon:-2.074},'zarautz':{lat:43.284,lon:-2.172},'zumaia':{lat:43.296,lon:-2.252},'irun':{lat:43.337,lon:-1.789},'hondarribia':{lat:43.372,lon:-1.796},'donostia':{lat:43.321,lon:-1.984},'mutriku':{lat:43.308,lon:-2.381},'errenteria':{lat:43.312,lon:-1.900},'errenderia':{lat:43.312,lon:-1.900},'orereta':{lat:43.312,lon:-1.900},'renteria':{lat:43.312,lon:-1.900},'legazpi':{lat:43.053,lon:-2.335},'azpeitia':{lat:43.180,lon:-2.268},'azkoitia':{lat:43.177,lon:-2.307},'onati':{lat:43.034,lon:-2.416},'oñati':{lat:43.034,lon:-2.416},'zumarraga':{lat:43.081,lon:-2.314},'ordizia':{lat:43.048,lon:-2.172},'gipuzkoa':{lat:43.215,lon:-2.150}};
     const isEguraldia = ['eguraldia','eguraldi','euraldia','euraldi','tiempo','temperatura','euri','lluvia','elur','nieve','haize','viento','hotza','beroa','laino','lanbro','eguzkia','sol','zerua','eguraldi'].some(w => msg2.includes(w));
@@ -156,7 +174,7 @@ export default async function handler(req, res) {
       const udalAgenda = udalUrls[mkAO] ? (udalUrls[mkAO].agenda || udalUrls[mkAO].web) : null;
       const comarcaAgenda = agendaUrls[comarca] || ("https://www.kulturklik.euskadi.eus/webkklik00-shagenda/eu/aa58aPublicoWar/agenda/sacarAgendaDia?locale=eu&municipio="+(mkAO.charAt(0).toUpperCase()+mkAO.slice(1)));
       fetchUrls = [udalAgenda, comarcaAgenda].filter((v,i,a) => v && a.indexOf(v)===i);
-      const prentsaAO = {'elgoibar':'https://barrena.eus/elgoibar/','eibar':'https://barrena.eus/eibar/','deba':'https://barrena.eus/deba/','soraluze':'https://barrena.eus/soraluze/','mendaro':'https://barrena.eus/mendaro/','mutriku':'https://barrena.eus/mutriku/','ermua':'https://barrena.eus/ermua/','tolosa':'https://ataria.eus/tolosa/','ibarra':'https://ataria.eus/ibarra/','villabona':'https://ataria.eus/villabona/','andoain':'https://ataria.eus/andoain/','zizurkil':'https://ataria.eus/zizurkil/','legorreta':'https://ataria.eus/legorreta/','zarautz':'https://zarautzguka.eus/','zumaia':'https://zarautzguka.eus/','azpeitia':'https://zarautzguka.eus/','azkoitia':'https://zarautzguka.eus/','usurbil':'https://noaua.eus/usurbil/','hernani':'https://noaua.eus/','lasarte':'https://noaua.eus/','urnieta':'https://noaua.eus/','astigarraga':'https://noaua.eus/'};
+      const prentsaAO = ITURRIAK.municipios;
       const mkAOprensa = Object.keys(prentsaAO).find(k => msg2.includes(k));
       if (mkAOprensa) fetchUrls = [prentsaAO[mkAOprensa]];
     } else if (isPI) {
@@ -183,22 +201,7 @@ export default async function handler(req, res) {
       searchQuery = message + ' site:barrena.eus OR site:goierri.hitza.eus OR site:ataria.eus OR site:oarsoaldea.hitza.eus OR site:bidasoa.hitza.eus OR site:zarautzguka.eus OR site:irutxulo.hitza.eus OR site:goiena.eus OR site:lea-artibaietamutriku.hitza.eus';
     } else {
       searchQuery = message + ' Gipuzkoa 2026 site:barrena.eus OR site:goierri.hitza.eus OR site:ataria.eus OR site:etakitto.eus OR site:oarsoaldea.hitza.eus OR site:bidasoa.hitza.eus OR site:naiz.info OR site:berria.eus';
-      const prentsaSekzioak = {
-        // Debabarrena - barrena.eus
-        'elgoibar':'https://barrena.eus/elgoibar/','eibar':'https://barrena.eus/eibar/','deba':'https://barrena.eus/deba/','soraluze':'https://barrena.eus/soraluze/','mendaro':'https://barrena.eus/mendaro/','mutriku':'https://barrena.eus/mutriku/','ermua':'https://barrena.eus/ermua/',
-        // Goierri - goierri.hitza.eus (URL: /herriak/municipio/)
-        
-        // Tolosaldea - ataria.eus
-        'tolosa':'https://ataria.eus/tolosa/','ibarra':'https://ataria.eus/ibarra/','villabona':'https://ataria.eus/villabona/','andoain':'https://ataria.eus/andoain/','zizurkil':'https://ataria.eus/zizurkil/','legorreta':'https://ataria.eus/legorreta/',
-        // Oarsoaldea - /herriak/municipio/ (errenteria usa portada)
-        
-        // Bidasoa - /herriak/municipio/
-        
-        // Urola - zarautzguka.eus
-        'zarautz':'https://zarautzguka.eus/','zumaia':'https://zarautzguka.eus/','azpeitia':'https://zarautzguka.eus/','azkoitia':'https://zarautzguka.eus/',
-        // Donostialdea - noaua.eus
-        'usurbil':'https://noaua.eus/usurbil/','hernani':'https://noaua.eus/','lasarte':'https://noaua.eus/','urnieta':'https://noaua.eus/','astigarraga':'https://noaua.eus/','lasarte-oria':'https://noaua.eus/',
-      };
+      const prentsaSekzioak = ITURRIAK.municipios;
       const mkAOelse = Object.keys(prentsaSekzioak).find(k => msg2.includes(k));
       const prentsaUrl = mkAOelse ? prentsaSekzioak[mkAOelse] : 'https://barrena.eus';
       fetchUrls = [prentsaUrl];
