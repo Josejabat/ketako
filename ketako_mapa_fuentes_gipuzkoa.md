@@ -77,3 +77,11 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - goiena.eus funciona en la practica para Debagoiena (Eskoriatza OK con datos reales) — verificado de facto
 - PENDIENTE (prioridad): 1) normalizar erratas ("ordician", "debegoiena...") ANTES del includes()
   2) hemeroteca  3) municipios pequenos de Goierri en lista herriIzenak si faltan
+
+## 7. TRANSPORTE — CERRADO 2026-07-04
+- Problema detectado: Claude inventaba lineas (dijo E2 Topo para Zarautz-Donostia) porque el HTML de Euskotren es JS y llega vacio
+- Solucion (8a63ce5 + bcc5705 + 1e99e0f): TABLA FIJA de lineas en ctx de la rama tren (E1 costa, E2 Topo, Renfe C-1, Alvia Madrid, TGV Hendaia, buses PESA/Lurraldebus/ALSA)
+- BUG importante arreglado de paso: el bucle de fetch hacia ctx='' y borraba cualquier contexto previo. Ahora ctx = ctx || ''
+- VERIFICADO: "zarautzetik donostiara trenak" -> E1 kostaldekoa con paradas correctas (Orio, Usurbil)
+- LECCION DE ARQUITECTURA: para datos estables (lineas, telefonos, direcciones) tabla fija en codigo > fetch. Aplicable a futuro: telefonos urgencia, farmacias de pueblo, sedes udala
+- Horas exactas de tren: pendiente, requiere API Euskotren/Renfe o GTFS (sesion propia)
