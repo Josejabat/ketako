@@ -66,3 +66,14 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - CONFIRMADO problema deteccion: "debegoienanastebururako" (erratas/palabras pegadas) no reconoce comarca.
   Solucion futura: normalizar texto antes de includes(). Usuarios mayores escribiran asi
 - PENDIENTE proxima sesion: 1) verificar kulturklik con curl 2) normalizacion erratas 3) URL Irun 4) Goierri 5) hemeroteca
+
+## 6. SESION EXTENDIDA 2026-07-04 — KULTURKLIK EN PRODUCCION
+- Commit b5b24df: kulturklik.euskadi.eus como fuente de agenda + extraccion por [Municipio]
+- Como funciona: la URL sacarAgendaDia devuelve TODA Euskadi (~100-180k chars, el parametro municipio NO filtra);
+  el codigo extrae solo los fragmentos alrededor de '[Municipio]' (formato: evento lugar [Herria] hora)
+- VERIFICADO: "zer egin ordizian" -> Goierriko Jazzaldia con horas, Altamirako Jaiak, bertsos. GOIERRI CERRADO
+- Cobertura nueva: agenda cultural para TODOS los municipios via kulturklik (Donostia, Bidasoa, Oarsoaldea incluidos)
+- deba.eus verificado NO util (solo menu, /eu/albisteak no existe) — udala Deba descartado
+- goiena.eus funciona en la practica para Debagoiena (Eskoriatza OK con datos reales) — verificado de facto
+- PENDIENTE (prioridad): 1) normalizar erratas ("ordician", "debegoiena...") ANTES del includes()
+  2) hemeroteca  3) municipios pequenos de Goierri en lista herriIzenak si faltan
