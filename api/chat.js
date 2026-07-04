@@ -192,6 +192,9 @@ export default async function handler(req, res) {
         'EUSKOTREN E1 (Donostia Amara-Bilbao Matiko, linea de la costa): Donostia, Usurbil, Orio, Zarautz, Zumaia, Deba, Mendaro, Elgoibar, Eibar, Ermua, Durango, Bilbao\n' +
         'EUSKOTREN E2 Topo (Lasarte-Oria-Hendaia): Lasarte-Oria, Donostia Amara, Herrera, Pasaia, Errenteria, Oiartzun, Irun, Hendaia\n' +
         'RENFE Cercanias C-1 (Irun-Brinkola): Irun, Pasaia, Donostia, Hernani, Urnieta, Andoain, Villabona, Tolosa, Ikaztegieta, Legorreta, Ordizia, Beasain, Ormaiztegi, Zumarraga, Legazpi, Brinkola\n' +
+        'RENFE larga distancia (Alvia/Intercity): Donostia-Madrid (~5h), parada en Zumarraga; billetes renfe.com\n' +
+        'Desde Hendaia: SNCF/TGV hacia Baiona, Bordele y Paris\n' +
+        'AUTOBUSES: PESA/Lurraldebus Donostia-Bilbao directo ~1h20 y lineas comarcales; ALSA Donostia-Madrid; info lurraldebus.eus, pesa.net, alsa.es\n' +
         'Para horarios exactos: euskotren.eus o renfe.com\n\n';
         if (msg2.includes('tren') || msg2.includes('euskotren') || msg2.includes('renfe')) { fetchUrls = ['https://www.euskotren.eus/es/tren/horarios', 'https://www.renfe.com/es/es/cercanias/cercanias-pais-vasco/horarios']; }
       
