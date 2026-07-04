@@ -203,8 +203,9 @@ export default async function handler(req, res) {
       searchQuery = message + ' Gipuzkoa 2026 site:barrena.eus OR site:goierri.hitza.eus OR site:ataria.eus OR site:etakitto.eus OR site:oarsoaldea.hitza.eus OR site:bidasoa.hitza.eus OR site:naiz.info OR site:berria.eus';
       const prentsaSekzioak = ITURRIAK.municipios;
       const mkAOelse = Object.keys(prentsaSekzioak).find(k => msg2.includes(k));
-      const prentsaUrl = mkAOelse ? prentsaSekzioak[mkAOelse] : 'https://barrena.eus';
-      fetchUrls = [prentsaUrl];
+      const prentsaUrl = mkAOelse ? prentsaSekzioak[mkAOelse] : null;
+        if (prentsaUrl) { fetchUrls = [prentsaUrl]; }
+        else { fetchUrls = null; searchQuery = message + ' Gipuzkoa 2026 site:naiz.info OR site:berria.eus OR site:goierri.hitza.eus OR site:bidasoa.hitza.eus OR site:irutxulo.hitza.eus'; }
     }
     if (fetchUrls && fetchUrls.length) {
       ctx = '';
@@ -212,7 +213,7 @@ export default async function handler(req, res) {
         try {
           const r = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
           const html = await r.text();
-          ctx += 'Fuente: ' + url + '\n' + html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 3000) + '\n\n';
+          ctx += 'Fuente: ' + url + '\n' + html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 6000) + '\n\n';
         } catch(e) { /* fuente fallida, seguimos con las demas */ }
       }
     } else if (fetchUrl) {
