@@ -188,7 +188,12 @@ export default async function handler(req, res) {
     } else if (isKI) {
       searchQuery = message + ' resultado 2026 ' + DS;
     } else if (isTR) {
-      if (msg2.includes('tren') || msg2.includes('euskotren') || msg2.includes('renfe')) { fetchUrls = ['https://www.euskotren.eus/es/tren/horarios', 'https://www.renfe.com/es/es/cercanias/cercanias-pais-vasco/horarios']; }
+      ctx = 'LINEAS DE TREN GIPUZKOA (datos fijos verificados):\n' +
+        'EUSKOTREN E1 (Donostia Amara-Bilbao Matiko, linea de la costa): Donostia, Usurbil, Orio, Zarautz, Zumaia, Deba, Mendaro, Elgoibar, Eibar, Ermua, Durango, Bilbao\n' +
+        'EUSKOTREN E2 Topo (Lasarte-Oria-Hendaia): Lasarte-Oria, Donostia Amara, Herrera, Pasaia, Errenteria, Oiartzun, Irun, Hendaia\n' +
+        'RENFE Cercanias C-1 (Irun-Brinkola): Irun, Pasaia, Donostia, Hernani, Urnieta, Andoain, Villabona, Tolosa, Ikaztegieta, Legorreta, Ordizia, Beasain, Ormaiztegi, Zumarraga, Legazpi, Brinkola\n' +
+        'Para horarios exactos: euskotren.eus o renfe.com\n\n';
+        if (msg2.includes('tren') || msg2.includes('euskotren') || msg2.includes('renfe')) { fetchUrls = ['https://www.euskotren.eus/es/tren/horarios', 'https://www.renfe.com/es/es/cercanias/cercanias-pais-vasco/horarios']; }
       
       else { searchQuery = message + ' site:lurraldebus.eus OR site:euskotren.eus'; }
     } else if (isNO) {
