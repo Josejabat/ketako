@@ -85,3 +85,10 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - VERIFICADO: "zarautzetik donostiara trenak" -> E1 kostaldekoa con paradas correctas (Orio, Usurbil)
 - LECCION DE ARQUITECTURA: para datos estables (lineas, telefonos, direcciones) tabla fija en codigo > fetch. Aplicable a futuro: telefonos urgencia, farmacias de pueblo, sedes udala
 - Horas exactas de tren: pendiente, requiere API Euskotren/Renfe o GTFS (sesion propia)
+
+## 11. LECCION EGURTZEGI - LA RAMA SOCIAL NECESITA DISENO, NO PARCHES (2026-07-06)
+- "pisos tutelados en usurbil" tras el fix dio el piso de Aukera Fundazioa (discapacidad intelectual): VERDADERO pero NO responde la pregunta real
+- La respuesta real (Joseja la conoce en persona, visito Egurtzegi): proyecto MUNICIPAL de Usurbil, pueblo entero volcado, 110 viviendas con cuidados + centro de dia + Sendian. Matia Fundazioa y Diputacion entraron cuando el proyecto se quedo sin fondos - el merito y el origen es del ayuntamiento y del pueblo
+- LECCION: en lo social, el primer resultado de busqueda no es la respuesta. Hace falta: (1) behagi.eus como fuente principal (directorio oficial de TODOS los centros), (2) web municipal como contexto, (3) que Claude presente el panorama (que recursos hay, para quien es cada uno) y no un solo resultado
+- Publico de Ketako = mayores de Duintasuna. Aqui la precision importa mas que en ninguna otra rama. SESION PROPIA con calma, sin prisa (peticion expresa de Joseja)
+- Diseno tentativo rama social: isUD social -> fetch/busqueda behagi.eus + site municipal, system prompt que pida enumerar recursos por tipo de destinatario

@@ -12,9 +12,7 @@ export default async function handler(req, res) {
     const msg = message.toLowerCase();
     const isES = /\b(el|la|los|las|de|en|que|es|un|una|para|por|con|del|al|hay|si|hoy|resultado|partido|futbol|noticias|final|ayer|farmacia|guardia|agenda|fiestas|renteria|errenteria|orereta|tolosa|zarautz|eibar|elgoibar|horario|tren|cuantos|personas|mayores|quien|hubo|fue|habitantes|poblacion|datos)\b/i.test(msg);
     const lang = isES ? 'SPANISH' : 'BASQUE';
-    const ERRATAK = [[/debegoiena/g,'debagoiena'],[/devagoiena/g,'debagoiena'],[/ordici/g,'ordizi'],[/donosti(?!a)/g,'donostia'],[/errenderia/g,'errenteria']];
-    let msg2 = msg.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-    for (const [a,b] of ERRATAK) msg2 = msg2.replace(a,b);
+    const msg2 = msg;
     const isDB = ['elgoibar','eibar','ermua','deba','soraluze','mallabia','mendaro','debabarrena','mutriku'].some(w => msg2.includes(w));
     const isDO = ['arrasate','mondragon','bergara','onati','eskoriatza','aretxabaleta'].some(w => msg2.includes(w));
     const isGO = ['beasain','zumarraga','ordizia','lazkao','goierri','segura','ataun','zaldibia','ormaiztegi','gabiria','idiazabal','lazkao','olaberria','mutiloa','ezkio','itsaso'].some(w => msg2.includes(w));
@@ -34,7 +32,7 @@ export default async function handler(req, res) {
         // Tolosaldea — ataria.eus
         'tolosa':'https://ataria.eus/tolosa/','ibarra':'https://ataria.eus/ibarra/','villabona':'https://ataria.eus/villabona/','andoain':'https://ataria.eus/andoain/','zizurkil':'https://ataria.eus/zizurkil/','legorreta':'https://ataria.eus/legorreta/',
         // Urola — red GUKA, cada municipio su web
-        'zarautz':'https://zarautzguka.eus/zarautz/','zumaia':'https://baleike.eus','azpeitia':'https://uztarria.eus','azkoitia':'https://maxixatzen.eus','getaria':'https://guka.eus/getaria/','orio':'https://karkara.eus','aia':'https://karkara.eus',
+        'zarautz':'https://zarautzguka.eus/zarautz/','zumaia':'https://baleike.eus','azpeitia':'https://uztarria.eus','azkoitia':'https://maxixatzen.eus','orio':'https://karkara.eus','aia':'https://karkara.eus',
         // Donostialdea rural — noaua + udala Hernani
         'usurbil':'https://noaua.eus/usurbil/','hernani':'https://hernani.eus/eu/albisteak','lasarte':'https://noaua.eus/','urnieta':'https://noaua.eus/','astigarraga':'https://noaua.eus/',
         // Oarsoaldea — udala Errenteria
@@ -59,7 +57,7 @@ export default async function handler(req, res) {
     const isKI = ['kirol','deporte','kirola'].some(w => msg2.includes(w));
     const isTR = ['tren','euskotren','renfe','autobusa','autobus','lurraldebus','ordutegia','horario'].some(w => msg2.includes(w));
     const isNO = ['noticia','albiste','albizteak','berriak','azken','albisteak'].some(w => msg2.includes(w));
-    const isUD = ['baimena','tramite','izapidea','dirulaguntza','errolda','eskaera','zerbitzuak','laguntza','ayuda','subvencion','gestion','sala','pisos tutelados','tutelado','vivienda','etxebizitza','residencia','zaharren egoitza','dependencia','mendekotasun','teleasistencia','telelaguntza','rgi','padron','empadron','udaletxe','ayuntamiento','udala'].some(w => msg2.includes(w));
+    const isUD = ['baimena','tramite','izapidea','dirulaguntza','errolda','eskaera','zerbitzuak','laguntza','ayuda','subvención','gestión','sala'].some(w => msg2.includes(w));
     const udalUrls = {
   'abaltzisketa':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=001&hizkuntza=EU'},
   'aduna':{egoitza:'https://udal.egoitza.gipuzkoa.eus/WAS/AYTO/USCServicioCiudadanoVer15WEB/home.do?ayto=002&hizkuntza=EU'},
@@ -190,24 +188,15 @@ export default async function handler(req, res) {
     } else if (isKI) {
       searchQuery = message + ' resultado 2026 ' + DS;
     } else if (isTR) {
-      ctx = 'LINEAS DE TREN GIPUZKOA (datos fijos verificados):\n' +
-        'EUSKOTREN E1 (Donostia Amara-Bilbao Matiko, linea de la costa): Donostia, Usurbil, Orio, Zarautz, Zumaia, Deba, Mendaro, Elgoibar, Eibar, Ermua, Durango, Bilbao\n' +
-        'EUSKOTREN E2 Topo (Lasarte-Oria-Hendaia): Lasarte-Oria, Donostia Amara, Herrera, Pasaia, Errenteria, Oiartzun, Irun, Hendaia\n' +
-        'RENFE Cercanias C-1 (Irun-Brinkola): Irun, Pasaia, Donostia, Hernani, Urnieta, Andoain, Villabona, Tolosa, Ikaztegieta, Legorreta, Ordizia, Beasain, Ormaiztegi, Zumarraga, Legazpi, Brinkola\n' +
-        'RENFE larga distancia (Alvia/Intercity): Donostia-Madrid (~5h), parada en Zumarraga; billetes renfe.com\n' +
-        'Desde Hendaia: SNCF/TGV hacia Baiona, Bordele y Paris\n' +
-        'AUTOBUSES: PESA/Lurraldebus Donostia-Bilbao directo ~1h20 y lineas comarcales; ALSA Donostia-Madrid; info lurraldebus.eus, pesa.net, alsa.es\n' +
-        'Para horarios exactos: euskotren.eus o renfe.com\n\n';
-        if (msg2.includes('tren') || msg2.includes('euskotren') || msg2.includes('renfe')) { fetchUrls = ['https://www.euskotren.eus/es/tren/horarios', 'https://www.renfe.com/es/es/cercanias/cercanias-pais-vasco/horarios']; }
-      
+      if (msg2.includes('euskotren')) { fetchUrl = 'https://www.euskotren.eus/es/tren/horarios'; }
+      else if (msg2.includes('renfe')) { fetchUrl = 'https://www.renfe.com/es/es/cercanias/cercanias-pais-vasco/horarios'; }
       else { searchQuery = message + ' site:lurraldebus.eus OR site:euskotren.eus'; }
     } else if (isNO) {
-      const munNO = Object.keys(ITURRIAK.municipios).find(k => msg2.includes(k));
-      const nurl = munNO ? ITURRIAK.municipios[munNO] : (noticiaUrls[comarca] || null);
+      const nurl = isMU ? 'https://lea-artibaietamutriku.hitza.eus/' : (noticiaUrls[comarca] || null);
       if (nurl) { fetchUrl = nurl; } else { searchQuery = message + ' site:naiz.info OR site:berria.eus OR site:orain.eus'; }
     } else if (isUD) {
       const uMk = Object.keys(udalUrls).find(k => msg2.includes(k));
-      if (uMk && udalUrls[uMk].web) { searchQuery = message + ' 2026 site:' + udalUrls[uMk].web.replace('https://','').replace('http://','').split('/')[0]; } else if (uMk) { searchQuery = message + ' ' + uMk + ' udala gipuzkoa.eus'; } else { searchQuery = message + ' 2026 site:elgoibar.eus OR site:eibar.eus OR site:gipuzkoa.eus'; }
+      if (uMk) { searchQuery = message + ' 2026 site:' + (udalUrls[uMk].web || '').replace('https://','').replace('http://','').split('/')[0]; } else { searchQuery = message + ' 2026 site:elgoibar.eus OR site:eibar.eus OR site:gipuzkoa.eus'; }
     } else if (isAO) {
       searchQuery = message + ' site:barrena.eus OR site:goierri.hitza.eus OR site:ataria.eus OR site:oarsoaldea.hitza.eus OR site:bidasoa.hitza.eus OR site:zarautzguka.eus OR site:irutxulo.hitza.eus OR site:goiena.eus OR site:lea-artibaietamutriku.hitza.eus';
     } else {
@@ -219,28 +208,12 @@ export default async function handler(req, res) {
         else { fetchUrls = null; searchQuery = message + ' Gipuzkoa 2026 site:naiz.info OR site:berria.eus OR site:goierri.hitza.eus OR site:bidasoa.hitza.eus OR site:irutxulo.hitza.eus'; }
     }
     if (fetchUrls && fetchUrls.length) {
-      ctx = ctx || '';
+      ctx = '';
       for (const url of fetchUrls) {
         try {
           const r = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
           const html = await r.text();
-          let testua = html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-          if (url.includes('kulturklik')) {
-            const herriIzenak = ['Elgoibar','Eibar','Deba','Soraluze','Mendaro','Mutriku','Ermua','Tolosa','Ibarra','Villabona','Andoain','Zizurkil','Legorreta','Zarautz','Zumaia','Azpeitia','Azkoitia','Orio','Aia','Usurbil','Hernani','Lasarte','Urnieta','Astigarraga','Errenteria','Pasaia','Oiartzun','Lezo','Irun','Hondarribia','Beasain','Ordizia','Lazkao','Zumarraga','Urretxu','Legazpi','Ataun','Segura','Zaldibia','Donostia','Arrasate','Bergara','Elgeta','Antzuola','Aretxabaleta','Eskoriatza'];
-            const kera = herriIzenak.filter(h => msg2.includes(h.toLowerCase()));
-            if (kera.length) {
-              let zatiak = '';
-              for (const h of kera) {
-                let i = 0;
-                while ((i = testua.indexOf('[' + h, i)) !== -1 && zatiak.length < 5000) {
-                  zatiak += '... ' + testua.substring(Math.max(0, i - 220), i + 120) + '\n';
-                  i += 1;
-                }
-              }
-              testua = zatiak || 'Ez dago gaurko ekitaldirik kulturklik-en herri horretarako.';
-            } else { testua = testua.substring(0, 3000); }
-          }
-          ctx += 'Fuente: ' + url + '\n' + testua.substring(0, 6000) + '\n\n';
+          ctx += 'Fuente: ' + url + '\n' + html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 6000) + '\n\n';
         } catch(e) { /* fuente fallida, seguimos con las demas */ }
       }
     } else if (fetchUrl) {
