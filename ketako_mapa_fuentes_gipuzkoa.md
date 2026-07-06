@@ -132,3 +132,20 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
   * Behagi municipal: Tableau -> embeber (confirmado sesiones previas)
   * Seguridad Social provincial: web actualizada -> fetch (pendiente localizar URL exacta de estadisticas Gipuzkoa legible con curl)
   * Eustat, Dipu, GV: pendientes de clasificar
+
+## 14. BEHAGI - HISTORICO TABLEAU + HOJA DE RUTA COMPLETA (2026-07-06)
+### Behagi: dos partes, dos tecnicas (NO repetir el error)
+- DATOS MUNICIPALES (indicadores, listas espera, RGI): Tableau/JS. fetchUrl NO puede (ya invento "176 RGI"). CSV automatico: 403. PDF Deskargatu: reducido
+- PLAN acordado sesiones previas: CSVs descargados A MANO (Elgoibar ya hecho, serie 2018-2024) subidos a Vercel como estaticos. Mantenimiento anual
+- DIRECTORIO DE CENTROS (behagi.eus/es/recursos/...): HTML normal (Egurtzegi vista hoy) - probablemente fetcheable, VERIFICAR con curl
+### Hoja de ruta de pendientes (inventario con Joseja, 2026-07-06)
+1. Horarios tren/bus (PDFs Euskotren localizados, sec 13b)
+2. Social/behagi 3 capas (secs 11, 15, 15b) - CON CALMA
+3. Sanidad Osakidetza (centros, PAC, cita previa) - sensible
+4. Farmacias: verificar si cofgipuzkoa da la guardia del dia fetcheable
+5. Deportes 2 capas (Joseja): noticias=prensa local OK; datos=webs CLUBS y FEDERACIONES - verificar
+6. Montana/rutas: Aizkorri, Ernio, Izarraitz - explorar fuentes
+7. Diputacion + GV (Gipuzkoa): ayudas, gipuzkoa.eus, euskadi.eus
+8. Turismo/patrimonio (sec 12, alucinacion Arantzazu confirmada 2x)
+9. Fiestas patronales (tabla con Joseja) 10. Lea-Artibai via Brave (Mutriku)
+11. Hemeroteca 12. System prompt ("beste bilaketa bat egin beharko nuke")
