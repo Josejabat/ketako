@@ -175,3 +175,9 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - Contraprueba castellano: "farmacias de guardia" -> "formazioaz eguardia" (eu-ES retuerce castellano)... PERO Ketako respondio bien igual: includes() de 'guardia' dentro de 'eguardia' + toponimo limpio = doble red de seguridad
 - Decision: eu-ES como default (publico euskaldun + toponimos). Solucion completa (doble boton eus/cast o Whisper API): sesion propia si la prueba con usuarios lo pide
 - AMBIGUEDAD detectada (Joseja): "Anoeta" = estadio Y pueblo. Ketako dio solo estadio; deberia presentar AMBOS y preguntar. Regla de system prompt para nombres ambiguos - pendiente
+
+## 19. PENDIENTE MANANA: MICRO EN LA APP/MOVIL (Joseja, 2026-07-06)
+- El micro de la app (PWA/movil) NO entiende - distinto del arreglo de hoy (que fue Chrome/Mac)
+- Sospechoso n1: el codigo tiene isIOS2 que fuerza es-ES en iOS (linea ~244) - hoy solo cambiamos la rama no-iOS a eu-ES
+- Verificar manana: (1) probar micro en el movil real de Joseja tras el cambio de hoy, (2) si iOS, cambiar tambien la rama isIOS2 a eu-ES, (3) revisar permisos de micro en la PWA, (4) recordar que Safari/WebKit tiene reglas propias de SpeechRecognition
+- Empezar la sesion AQUI
