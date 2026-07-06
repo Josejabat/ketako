@@ -241,7 +241,7 @@ function toggleWebSpeech(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   rec = new SR();
   const isIOS2 = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  rec.lang = isIOS2 ? 'es-ES' : 'eu-ES,es-ES';
+  rec.lang = 'eu-ES';
   rec.interimResults = false;
   rec.onstart = () => { going = true; document.getElementById('micbtn').classList.add('on'); setStatus('Entzuten...'); };
   rec.onresult = (e) => { document.getElementById('inp').value = e.results[0][0].transcript; send(); };

@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     const msg = message.toLowerCase();
     const isES = /\b(el|la|los|las|de|en|que|es|un|una|para|por|con|del|al|hay|si|hoy|resultado|partido|futbol|noticias|final|ayer|farmacia|guardia|agenda|fiestas|renteria|errenteria|orereta|tolosa|zarautz|eibar|elgoibar|horario|tren|cuantos|personas|mayores|quien|hubo|fue|habitantes|poblacion|datos)\b/i.test(msg);
     const lang = isES ? 'SPANISH' : 'BASQUE';
-    const ERRATAK = [[/debegoiena/g,'debagoiena'],[/devagoiena/g,'debagoiena'],[/ordici/g,'ordizi'],[/donosti(?!a)/g,'donostia'],[/errenderia/g,'errenteria']];
+    const ERRATAK = [[/ano eta/g,'anoeta'],[/debegoiena/g,'debagoiena'],[/devagoiena/g,'debagoiena'],[/ordici/g,'ordizi'],[/donosti(?!a)/g,'donostia'],[/errenderia/g,'errenteria']];
     let msg2 = msg.normalize('NFD').replace(/[\u0300-\u036f]/g,'');
     for (const [a,b] of ERRATAK) msg2 = msg2.replace(a,b);
     const isDB = ['elgoibar','eibar','ermua','deba','soraluze','mallabia','mendaro','debabarrena','mutriku'].some(w => msg2.includes(w));
