@@ -167,3 +167,11 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 ### 14. VELOCIDAD
 - Respuestas lentas: fetch(es) + Claude en serie. Vias: fetches en paralelo, recortar contexto (hoy 3000-6000), modelo rapido para preguntas simples, cache de fetches frecuentes
 - Sesion propia de optimizacion - medir antes de tocar (donde se va el tiempo: fetch vs Claude)
+
+## 18. VOZ - RESUELTO PARCIAL 2026-07-06 (verificado por Joseja con micro real)
+- CAUSA encontrada: rec.lang tenia 'eu-ES,es-ES' (valor INVALIDO, la API solo acepta uno) -> caia a castellano. iOS ademas forzado a es-ES
+- FIX: rec.lang = 'eu-ES'. VERIFICADO por voz: azkoitia OK, elgoibar OK, arrasate OK (toponimos = el problema principal, RESUELTO)
+- Caso nuevo: "Anoeta" -> micro escribe "ano eta" (segmentacion). FIX: anadido a ERRATAK. La normalizacion de erratas sirve TAMBIEN para erratas del micro - anotar futuras igual
+- Contraprueba castellano: "farmacias de guardia" -> "formazioaz eguardia" (eu-ES retuerce castellano)... PERO Ketako respondio bien igual: includes() de 'guardia' dentro de 'eguardia' + toponimo limpio = doble red de seguridad
+- Decision: eu-ES como default (publico euskaldun + toponimos). Solucion completa (doble boton eus/cast o Whisper API): sesion propia si la prueba con usuarios lo pide
+- AMBIGUEDAD detectada (Joseja): "Anoeta" = estadio Y pueblo. Ketako dio solo estadio; deberia presentar AMBOS y preguntar. Regla de system prompt para nombres ambiguos - pendiente
