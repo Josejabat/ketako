@@ -117,3 +117,10 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - PLAN sesion horarios: descargar PDFs E1 y E2 -> extraer cadencias y minutos exactos -> tabla ORDUTEGIAK verificada -> calculo siguiente tren con hora actual (timezone Europe/Madrid)
 - El patron de nombre incluye temporada (Verano2026): al cambiar temporada cambia el PDF - anotar verificacion estacional
 - GTFS opendata: la query API no devolvio nada por esa via, explorar otra ruta si hiciera falta (los PDFs bastan para empezar)
+
+## 15. PRINCIPIO DE ARQUITECTURA: OBSERVATORIOS COMO ENCICLOPEDIA (Joseja, 2026-07-06)
+- Behagi (y todo observatorio: Seguridad Social, Eustat, Dipu) = ENCICLOPEDIA, no web de noticias. Se extraen los datos UNA VEZ, verificados, y se sirven con precision y cita ("Behagi 2024")
+- Las preguntas de ESTRUCTURA ("cuantas residencias publicas/concertadas/privadas en Gipuzkoa", "cuantos pisos tutelados") no necesitan dato fresco - necesitan dato EXACTO. 2024 vale; "unas 60, creo" no vale
+- Este tipo de respuesta es herramienta de argumentacion para Duintasuna - la precision es politica, no cosmetica
+- Rama social en 3 capas: (1) estructura -> datos Behagi embebidos con fuente y ano, mantenimiento anual; (2) directorio -> fetch behagi.eus/recursos (verificar curl); (3) tramites -> Dipu/udala/SegSocial/GV
+- Mismo principio aplicable a futuro: pensiones (SegSocial, datos revista Duintasuna), Eustat, presupuestos forales
