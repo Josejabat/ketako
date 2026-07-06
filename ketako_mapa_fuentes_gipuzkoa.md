@@ -92,3 +92,10 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - LECCION: en lo social, el primer resultado de busqueda no es la respuesta. Hace falta: (1) behagi.eus como fuente principal (directorio oficial de TODOS los centros), (2) web municipal como contexto, (3) que Claude presente el panorama (que recursos hay, para quien es cada uno) y no un solo resultado
 - Publico de Ketako = mayores de Duintasuna. Aqui la precision importa mas que en ninguna otra rama. SESION PROPIA con calma, sin prisa (peticion expresa de Joseja)
 - Diseno tentativo rama social: isUD social -> fetch/busqueda behagi.eus + site municipal, system prompt que pida enumerar recursos por tipo de destinatario
+
+## 12. RAMA TURISMO/PATRIMONIO - DETECTADA 2026-07-06 (pendiente, sesion propia)
+- "arantzazun zer ikusi" cae a Brave generico: respuesta pobre y con probable relleno ("Gantzabal auzoko baserriak" - sin confirmar, sospecha de alucinacion)
+- Datos verificados por Joseja (conocimiento local) para Arantzazu: friso de Oteiza con MAS de 12 apostoles (deliberado, gran polemica), Basterretxea pinto la cripta, la Iglesia paralizo la obra por considerar el arte demasiado moderno ("ateos") - historia clave del arte vasco s.XX. Arquitectos: Saenz de Oiza y Laorga. Chillida: puertas
+- Fuentes candidatas para la rama: oficinas de turismo oficiales (getariaturismo.eus/festak ya vista, onatiturismo, zarauzturismo, turismo.euskadi.eus, gipuzkoaturismoa), eitb.eus para reportajes patrimoniales
+- Diseno tentativo: isTURISMO (zer ikusi, que visitar, bisita, turismo, museo, santutegia...) -> fetch/site: webs oficiales de turismo. Solapa con agenda (isAO) - definir prioridad
+- Como en lo social: en patrimonio la respuesta buena es la historia bien contada, no el primer resultado
