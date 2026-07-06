@@ -99,3 +99,12 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - Fuentes candidatas para la rama: oficinas de turismo oficiales (getariaturismo.eus/festak ya vista, onatiturismo, zarauzturismo, turismo.euskadi.eus, gipuzkoaturismoa), eitb.eus para reportajes patrimoniales
 - Diseno tentativo: isTURISMO (zer ikusi, que visitar, bisita, turismo, museo, santutegia...) -> fetch/site: webs oficiales de turismo. Solapa con agenda (isAO) - definir prioridad
 - Como en lo social: en patrimonio la respuesta buena es la historia bien contada, no el primer resultado
+
+## 13. HORARIOS DE TREN CON HORA ACTUAL - DISENO (2026-07-06, idea de Joseja)
+- Lo que quiere el usuario: "si pregunto a las 9, dime que el siguiente a Zarautz sale a las 9:21, y de ahi cada hora"
+- DISENO (opcion C): tabla ORDUTEGIAK por tramo/linea con: minuto de salida (cadencia), frecuencia, primer y ultimo tren, variantes (laborable/finde/verano) + calculo del siguiente tren con hora actual
+- Dato de Joseja pendiente de verificar: Elgoibar->Zarautz sale a las :21 de cada hora
+- OJO TECNICO: Vercel corre en UTC - convertir SIEMPRE a Europe/Madrid o dara trenes pasados
+- Fuente de verificacion: PDFs/paginas de horarios oficiales de Euskotren (buscar version fetcheable), opendata.euskadi.eus (GTFS) como opcion robusta a futuro
+- Respuesta tipo: "hurrengo trena 9:21ean, gero orduro, azkena 22:21. Asteburuan ordutegi berezia"
+- SESION PROPIA: tabla + calculo + timezone + verificacion cadencias E1, Topo, C-1
