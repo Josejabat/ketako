@@ -157,3 +157,13 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - Lo que saldra: erratas reales, temas no cubiertos, formas de preguntar no anticipadas -> alimenta ERRATAK, la hoja de ruta y las prioridades
 - Diseno visual: aparcado a proposito - primero que responda bien (decision Joseja)
 - Las preguntas que fallen se anotan AQUI y marcan el orden de ataque de los 12 pendientes
+
+## 17. VOZ Y VELOCIDAD - DETECTADOS 2026-07-06 (Joseja)
+### 13. MICRO/VOZ (afecta a la prueba con usuarios - se hara POR ESCRITO de momento)
+- Problema: el micro no entiende euskera ni nombres de pueblos (escribe mal Azkoitia, Oñati...)
+- Causa probable: Web Speech API del navegador configurada a es-ES en index.html
+- Vias: (a) probar lang='eu-ES' (cambio 1 linea, verificar calidad), (b) doble boton eus/cast, (c) Whisper API (robusta: bilingue + toponimos, coste pequeno)
+- BONUS de probar por escrito: las erratas escritas reales alimentan la lista ERRATAK
+### 14. VELOCIDAD
+- Respuestas lentas: fetch(es) + Claude en serie. Vias: fetches en paralelo, recortar contexto (hoy 3000-6000), modelo rapido para preguntas simples, cache de fetches frecuentes
+- Sesion propia de optimizacion - medir antes de tocar (donde se va el tiempo: fetch vs Claude)
