@@ -108,3 +108,12 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - Fuente de verificacion: PDFs/paginas de horarios oficiales de Euskotren (buscar version fetcheable), opendata.euskadi.eus (GTFS) como opcion robusta a futuro
 - Respuesta tipo: "hurrengo trena 9:21ean, gero orduro, azkena 22:21. Asteburuan ordutegi berezia"
 - SESION PROPIA: tabla + calculo + timezone + verificacion cadencias E1, Topo, C-1
+
+## 13b. VERIFICACION HORARIOS - HALLAZGO CLAVE (2026-07-06)
+- Paginas HTML de horarios Euskotren: JS, solo menu (LEN~1800, confirmado curl) - NO fetchear
+- PERO: PDFs oficiales de horarios por linea y sentido, actualizados por temporada, en euskotren.eus/sites/default/files/horarios/
+  * E1_Amara_Matiko_CARTEL_Verano2026.pdf + E1_Matiko_Amara (la de la costa, la nuestra)
+  * E2_HendaiaLasarte + E2_Lasarte_Hendaia (Topo), E3, E4 - todos Verano2026
+- PLAN sesion horarios: descargar PDFs E1 y E2 -> extraer cadencias y minutos exactos -> tabla ORDUTEGIAK verificada -> calculo siguiente tren con hora actual (timezone Europe/Madrid)
+- El patron de nombre incluye temporada (Verano2026): al cambiar temporada cambia el PDF - anotar verificacion estacional
+- GTFS opendata: la query API no devolvio nada por esa via, explorar otra ruta si hiciera falta (los PDFs bastan para empezar)
