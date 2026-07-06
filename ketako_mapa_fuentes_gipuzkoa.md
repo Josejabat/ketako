@@ -149,3 +149,11 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 8. Turismo/patrimonio (sec 12, alucinacion Arantzazu confirmada 2x)
 9. Fiestas patronales (tabla con Joseja) 10. Lea-Artibai via Brave (Mutriku)
 11. Hemeroteca 12. System prompt ("beste bilaketa bat egin beharko nuke")
+
+## 16. SIGUIENTE FASE: PRUEBA CON USUARIOS REALES (decision Joseja, 2026-07-06)
+- Antes de seguir con los 12 pendientes: probar con 1-2 personas de confianza del perfil real (mayores, Duintasuna, movil/microfono)
+- Metodo: dar solo ketako.eus + "preguntale lo que le preguntarias a un vecino que sabe todo de Gipuzkoa". SIN ejemplos ni instrucciones (contaminan)
+- Recoger: preguntas LITERALES + respuestas (pantallazos o tomar nota al lado). Cada pregunta real vale mas que 10 nuestras
+- Lo que saldra: erratas reales, temas no cubiertos, formas de preguntar no anticipadas -> alimenta ERRATAK, la hoja de ruta y las prioridades
+- Diseno visual: aparcado a proposito - primero que responda bien (decision Joseja)
+- Las preguntas que fallen se anotan AQUI y marcan el orden de ataque de los 12 pendientes
