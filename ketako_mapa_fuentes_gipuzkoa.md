@@ -124,3 +124,11 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - Este tipo de respuesta es herramienta de argumentacion para Duintasuna - la precision es politica, no cosmetica
 - Rama social en 3 capas: (1) estructura -> datos Behagi embebidos con fuente y ano, mantenimiento anual; (2) directorio -> fetch behagi.eus/recursos (verificar curl); (3) tramites -> Dipu/udala/SegSocial/GV
 - Mismo principio aplicable a futuro: pensiones (SegSocial, datos revista Duintasuna), Eustat, presupuestos forales
+
+## 15b. MATIZ AL PRINCIPIO (Joseja): SEGURIDAD SOCIAL = FUENTE VIVA, NO ENCICLOPEDIA
+- La web de la Seguridad Social SI da datos provinciales (pensiones por provincia) y los ACTUALIZA (mensual) -> via FETCH directo, no embeber
+- Regla refinada: no es "observatorio = embeber". Es: dato alcanzable con curl y actualizado -> FETCH (fuente viva); dato encerrado en JS/Tableau -> extraer y embeber con cita (enciclopedia)
+- Clasificacion por organismo (verificar cada uno con curl antes de decidir):
+  * Behagi municipal: Tableau -> embeber (confirmado sesiones previas)
+  * Seguridad Social provincial: web actualizada -> fetch (pendiente localizar URL exacta de estadisticas Gipuzkoa legible con curl)
+  * Eustat, Dipu, GV: pendientes de clasificar
