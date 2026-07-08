@@ -17,6 +17,7 @@ export default async function handler(req, res) {
     const blob = new Blob([audioBuffer], { type: mimeType || 'audio/webm' });
     formData.append('file', blob, 'audio.' + ext);
     formData.append('model', 'whisper-1');
+    formData.append('prompt', 'Euskarazko galdera Gipuzkoan: eguraldia, Elgoibar, Zarautz, Debagoiena, Donostia, Oñati, asteburuan zer dago, trena, farmazia, jaiak.');
     
     
     const r = await fetch('https://api.openai.com/v1/audio/transcriptions', {
@@ -32,7 +33,7 @@ export default async function handler(req, res) {
       data.text = txt;
       res.json({ text: data.text });
     } else {
-      res.status(500).json({ error: 'Transcription failed', details: data });
+      console.log('OPENAI ERROR:', JSON.stringify(data)); res.status(500).json({ error: 'Transcription failed', details: data });
     }
   } catch(err) {
     res.status(500).json({ error: err.message });
