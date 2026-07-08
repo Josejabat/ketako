@@ -181,3 +181,14 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - Sospechoso n1: el codigo tiene isIOS2 que fuerza es-ES en iOS (linea ~244) - hoy solo cambiamos la rama no-iOS a eu-ES
 - Verificar manana: (1) probar micro en el movil real de Joseja tras el cambio de hoy, (2) si iOS, cambiar tambien la rama isIOS2 a eu-ES, (3) revisar permisos de micro en la PWA, (4) recordar que Safari/WebKit tiene reglas propias de SpeechRecognition
 - Empezar la sesion AQUI
+
+## 15. SESION 2026-07-08 - MICRO IPHONE RESUELTO
+- Micro iPhone NUNCA habia funcionado: whisper sin idioma transcribia euskera castellanizado (por eso existia el array fixes en transcribe.js)
+- ERROR PROPIO: instalamos language=eu y ROMPIO todo - la API NO soporta 'eu'. LECCION: verificar que un parametro esta soportado ANTES de instalarlo
+- SOLUCION FINAL (commit 9121dea): formData prompt con frase euskera + toponimos - orienta a whisper sin forzar
+- Whisper ALUCINA: si el audio llega mudo/raro devuelve el prompt como transcripcion (visto en produccion)
+- Tecnica nueva: reproducir fallos desde Mac con say + afconvert + python urllib contra /api/transcribe - mas rapido que vercel logs
+- PENDIENTE 1: DNS apex ketako.eus sin www falla a ratos en movil (www siempre va) - dig + arreglo
+- PENDIENTE 2 (proxima sesion): speakReply lee numeros en castellano (Monica es-ES, iOS sin voz eu) - convertir cifras a palabras euskera (21 -> hogeita bat)
+- PENDIENTE 3: doble toque del micro iPhone - funciona pero observar si los mayores lo entienden
+- Vercel CLI update 54.4->54.20 pendiente, dia tranquilo
