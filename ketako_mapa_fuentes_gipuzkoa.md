@@ -204,3 +204,4 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - SOSPECHOSA fichada (no reincidente aun): "eskimpo" (el tiempo en castellano). "Orelleta" pendiente de saber que se dijo (Orereta/Errenteria?).
 - PENDIENTE ESTRELLA proxima sesion: "Gipuzkoan eguraldia" da UNA temperatura - mal. Diseno decidido: 3 paisajes en una frase (Kostaldea/Donostia, Debagoiena/Arrasate, Goierri/Ordizia). Vive en la logica del tiempo del backend (sin mapear aun).
 - PENDIENTE 3 sigue vivo: observar doble toque micro con probadores. Behagi/tableau y Vercel CLI update siguen en nevera.
+- EXTRA ICONO: resuelto el misterio de junio - faltaba <link apple-touch-icon> (iOS ignora el manifest para el icono) Y los PNG tenian esquinas transparentes (iOS pinta el alpha de negro). Nuevos: icon-ios.png 180px opaco a sangre + 192/512 regenerados. LECCION: icono iOS = etiqueta propia + PNG sin alpha. Pendiente: reinstalar app en iPhone y ver la K nueva.
