@@ -192,3 +192,15 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - PENDIENTE 2 (proxima sesion): speakReply lee numeros en castellano (Monica es-ES, iOS sin voz eu) - convertir cifras a palabras euskera (21 -> hogeita bat)
 - PENDIENTE 3: doble toque del micro iPhone - funciona pero observar si los mayores lo entienden
 - Vercel CLI update 54.4->54.20 pendiente, dia tranquilo
+
+## 16. SESION 2026-07-10 - VOZ EUSKARAZ + PENDIENTE 1 CERRADO
+- PENDIENTE 1 (DNS apex) CERRADO: config sana (apex 307 -> www via Vercel, TTL 300, sin AAAA/CAA). El "falla a ratos" era cobertura movil de Zarautz + dias de deploys. Verificado 4/4 en iPhone por datos moviles. Nada que arreglar.
+- PENDIENTE 2 (numeros euskera) HECHO: zenbakiEuskaraz/zenbakiakEuskaraz en index.html - vigesimal, decimales (koma), horas. Solo para la voz (esana), pantalla intacta, solo si isEu.
+- TRUCO VENTRILOCUO: Monica (es-ES) lee "gei" con jota -> decenas escritas foneticamente para la voz: oguei, berroguei, hiruroguei, lauroguei. La palabra escrita se adapta a la boca de la voz.
+- LIMPIEZA DE VOZ: max->gehienez, min->gutxienez, uzt->uztaila, mm->milimetro, km/h->kilometro orduko, parentesis/dos puntos->comas (pausas). Solo en esana.
+- WHISPER: prompt engordado 5->28 toponimos (Zumaia dentro). Erratas nuevas en fixes: algoibar->elgoibar, sumajana/sumaia->zumaia. "Zumaia" suelto ya no se va a lituano.
+- FILOSOFIA ASUMIDA: whisper es probabilista, frases cortas fallaran a veces. Consejo a probadores: repetir con frase entera.
+- LECCION METODO: parche sin captura de OK es parche que no existe (limpieza de voz se quedo sin ejecutar y perseguimos fantasma). Deploy siempre atado con && al OK del parche.
+- SOSPECHOSA fichada (no reincidente aun): "eskimpo" (el tiempo en castellano). "Orelleta" pendiente de saber que se dijo (Orereta/Errenteria?).
+- PENDIENTE ESTRELLA proxima sesion: "Gipuzkoan eguraldia" da UNA temperatura - mal. Diseno decidido: 3 paisajes en una frase (Kostaldea/Donostia, Debagoiena/Arrasate, Goierri/Ordizia). Vive en la logica del tiempo del backend (sin mapear aun).
+- PENDIENTE 3 sigue vivo: observar doble toque micro con probadores. Behagi/tableau y Vercel CLI update siguen en nevera.
