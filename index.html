@@ -323,14 +323,49 @@ async function send(){
   document.getElementById('inp').focus();
 }
 
+function zenbakiEuskaraz(n){
+  const t = ['zero','bat','bi','hiru','lau','bost','sei','zazpi','zortzi','bederatzi','hamar','hamaika','hamabi','hamahiru','hamalau','hamabost','hamasei','hamazazpi','hemezortzi','hemeretzi'];
+  if(n < 20) return t[n];
+  if(n < 100){
+    const h = [[80,'laurogei'],[60,'hirurogei'],[40,'berrogei'],[20,'hogei']];
+    for(const [b, hitza] of h){
+      if(n >= b){ const r = n - b; return r === 0 ? hitza : hitza + 'ta ' + t[r]; }
+    }
+  }
+  if(n < 1000){
+    const e = ['','ehun','berrehun','hirurehun','laurehun','bostehun','seiehun','zazpiehun','zortziehun','bederatziehun'];
+    const c = Math.floor(n/100), r = n % 100;
+    return r === 0 ? e[c] : e[c] + ' eta ' + zenbakiEuskaraz(r);
+  }
+  if(n < 10000){
+    const m = Math.floor(n/1000), r = n % 1000;
+    const mila = m === 1 ? 'mila' : zenbakiEuskaraz(m) + ' mila';
+    return r === 0 ? mila : mila + ' eta ' + zenbakiEuskaraz(r);
+  }
+  return String(n);
+}
+function zenbakiakEuskaraz(s){
+  s = s.replace(/(\d{1,2}):(\d{2})/g, (m,h,mi) => +mi === 0 ? zenbakiEuskaraz(+h) : zenbakiEuskaraz(+h) + ' eta ' + zenbakiEuskaraz(+mi));
+  s = s.replace(/(\d+)[.,](\d+)/g, (m,o,d) => zenbakiEuskaraz(+o) + ' koma ' + d.split('').map(x => zenbakiEuskaraz(+x)).join(' '));
+  s = s.replace(/\d+/g, m => +m < 10000 ? zenbakiEuskaraz(+m) : m);
+  return s;
+}
 function speakReply(text){
   if(!('speechSynthesis' in window)) return;
   const plain = text.replace(/[#*\[\]()]/g, '').replace(/https?:\/\/\S+/g, '').trim();
   if(plain.length > 500) return;
-  const u = new SpeechSynthesisUtterance(plain);
+  
   const euWords = ['eta','dago','dira','bai','ez','zer','non','noiz','nola','du','da','zen','zuen','den','gradu','bihar','etzi','orain','euria','elurra','haizea','tenperatura','maximoa','minimoa'];
   const euCount = euWords.filter(w => plain.toLowerCase().includes(w)).length;
   const isEu = euCount >= 2;
+  let esana = isEu ? zenbakiakEuskaraz(plain) : plain;
+  if(isEu){
+    esana = esana.replace(/\bmax\.?\b/gi, 'gehienez').replace(/\bmin\.?\b/gi, 'gutxienez');
+    esana = esana.replace(/\buzt\.?\b/gi, 'uztaila').replace(/\bmm\b/gi, 'milimetro');
+    esana = esana.replace(/km\/h/gi, ' kilometro orduko').replace(/\bkm\b/gi, 'kilometro');
+    esana = esana.replace(/[():;]/g, ', ').replace(/,\s*,/g, ',');
+  }
+  const u = new SpeechSynthesisUtterance(esana);
   const voices = window.speechSynthesis.getVoices();
   if(isEu){
     const euVoice = voices.find(v => v.lang.startsWith('eu')) || voices.find(v => v.lang === 'es-ES' && v.name.includes('Monica')) || voices.find(v => v.lang === 'es-ES');

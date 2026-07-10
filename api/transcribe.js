@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     const blob = new Blob([audioBuffer], { type: mimeType || 'audio/webm' });
     formData.append('file', blob, 'audio.' + ext);
     formData.append('model', 'whisper-1');
-    formData.append('prompt', 'Euskarazko galdera Gipuzkoan: eguraldia, Elgoibar, Zarautz, Debagoiena, Donostia, Oñati, asteburuan zer dago, trena, farmazia, jaiak.');
+    formData.append('prompt', 'Euskarazko galdera Gipuzkoan: eguraldia, Zarautz, Zumaia, Getaria, Orio, Zestoa, Azpeitia, Azkoitia, Elgoibar, Eibar, Deba, Mutriku, Mendaro, Arrasate, Bergara, Oñati, Aretxabaleta, Beasain, Ordizia, Tolosa, Hernani, Lasarte, Errenteria, Irun, Hondarribia, Donostia, Debagoiena, Goierri, asteburuan zer dago, trena, farmazia, jaiak.');
     
     
     const r = await fetch('https://api.openai.com/v1/audio/transcriptions', {
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
     const data = await r.json();
     if (data.text) {
       let txt = data.text;
-      const fixes = [['el waiver','elgoibar'],['waiver','elgoibar'],['el goibar','elgoibar'],['el guaibor','elgoibar'],['el guaybar','elgoibar'],['ibar','eibar'],['ei bar','eibar'],['sarauz','zarautz'],['sarauts','zarautz'],['tolossa','tolosa'],['san sebastian','donostia'],['guipuzcoa','gipuzkoa'],['guipuzkoa','gipuzkoa']];
+      const fixes = [['algoibar','elgoibar'],['sumajana','zumaia'],['sumaia','zumaia'],['el waiver','elgoibar'],['waiver','elgoibar'],['el goibar','elgoibar'],['el guaibor','elgoibar'],['el guaybar','elgoibar'],['ibar','eibar'],['ei bar','eibar'],['sarauz','zarautz'],['sarauts','zarautz'],['tolossa','tolosa'],['san sebastian','donostia'],['guipuzcoa','gipuzkoa'],['guipuzkoa','gipuzkoa']];
       fixes.forEach(([bad,good]) => { txt = txt.replace(new RegExp(bad,'gi'), good); });
       data.text = txt;
       res.json({ text: data.text });
