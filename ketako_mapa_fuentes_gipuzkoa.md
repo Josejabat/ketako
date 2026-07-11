@@ -218,3 +218,5 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - PERLA: "elgoeibarren" matcheo EIBAR por substring y el modelo fue transparente ("Eibarrekoa daukat hurbil").
 - AVERIA NUEVA: irutxulo.hitza.eus NO CONECTA — explica Donostia sin eventos. PENDIENTE curl para diagnosticar (URL cambiada, bloqueo o caida).
 - LECCION METODO: pegar varios bloques de golpe en terminal = atasco de comillas (dquote). Regla nueva: un bloque, un Enter, esperar el OK.
+- DIAGNOSTICO IRUTXULO (2026-07-11): el sitio esta VIVO (curl HTTP/2 200, nginx). La averia no es del sitio sino del camino: la busqueda site:irutxulo (rama generica, linea 219) vuelve vacia o Donostia no llega con la palabra adecuada. ARREGLO PROPUESTO (sesion propia): rama comarcal para Donostia con irutxulo como fuente principal, como barrena/goiena.
+- PROXIMA SESION, candidatos: (1) rama Donostia+irutxulo, (2) anclas Whisper Debagoiena pequenos (Antzuola y vecinos — grep pendiente), (3) 'guraldi' a lista isEguraldia (2 min), (4) git config nombre/email (2 min, quita el aviso).
