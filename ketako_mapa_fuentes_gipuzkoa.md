@@ -210,3 +210,11 @@ OARSOALDEA ya tiene fuente real: errenteria.eus (udala).
 - SOSPECHOSA NUEVA (seria): con "en gipuzkoa zen" (sin palabra eguraldia, ctx vacio) el modelo INVENTO temperaturas (14/13/12) y condiciones de cielo en castellano imitando el formato. Violacion de "never fill from memory". Posible arreglo futuro: reforzar prompt o detectar respuestas meteo sin ctx.
 - CAMPO: Whisper patina con frases cortas al micro ("gipuzkoa" suelto -> "el ti gipuzkoa"). Con frase entera ("gipuzkoan eguraldia") acierta. Anotar en instrucciones de probadores: hablar en frases completas.
 - PENDIENTE no-regresion: probar "Elgoibarren zer eguraldi dago" (texto) para confirmar que los pueblos individuales siguen dando orain/bihar/etzi completo.
+- NO-REGRESION OK (2026-07-11): "en orereta que tiempo hace" da formato completo (orain/mediodia/tarde/bihar), alias orereta funcionando. Pueblos individuales intactos.
+- NEVERA (2 min): anadir 'guraldi' a lista isEguraldia — la errata "ze guraldi" esquiva el tiempo y cae a web (comportamiento honesto, dio baleike.eus).
+- SOSPECHOSA (familia inventos): "irrereta" -> el modelo interpreto Irura y lo coloco en Goierri — es TOLOSALDEA. Cuando no sabe, rellena.
+- LECCION CAMPO: carta de Duintasuna a Barrena en PAPEL pero no en digital (finde no trabajan). Ketako honesto: dio el titulo de otra carta, no invento. Seguimiento: lunes re-preguntar.
+- CAMPO MICRO (movil): "Antzuola" -> Whisper se va al ITALIANO ("Che tempo ave en Anzula") — tz/ts no existen en castellano. Arreglo: anclas Debagoiena pequenos en prompt Whisper. PENDIENTE grep.
+- PERLA: "elgoeibarren" matcheo EIBAR por substring y el modelo fue transparente ("Eibarrekoa daukat hurbil").
+- AVERIA NUEVA: irutxulo.hitza.eus NO CONECTA — explica Donostia sin eventos. PENDIENTE curl para diagnosticar (URL cambiada, bloqueo o caida).
+- LECCION METODO: pegar varios bloques de golpe en terminal = atasco de comillas (dquote). Regla nueva: un bloque, un Enter, esperar el OK.
