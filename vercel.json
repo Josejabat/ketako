@@ -3,6 +3,7 @@
   "routes": [
     {"src": "/api/chat", "dest": "/api/chat.js"},
     {"src": "/api/transcribe", "dest": "/api/transcribe.js"},
+    {"src": "/api/tts", "dest": "/api/tts.js"},
     {"src": "/", "dest": "/index.html"},
     {"src": "/(.*)", "dest": "/index.html"}
   ]

@@ -352,7 +352,7 @@ function zenbakiakEuskaraz(s){
   s = s.replace(/\d+/g, m => +m < 10000 ? zenbakiEuskaraz(+m) : m);
   return s;
 }
-function speakReply(text){
+async function speakReply(text){
   if(!('speechSynthesis' in window)) return;
   const plain = text.replace(/[#*\[\]()]/g, '').replace(/https?:\/\/\S+/g, '').trim();
   if(plain.length > 500) return;
@@ -366,6 +366,19 @@ function speakReply(text){
     esana = esana.replace(/\buzt\.?\b/gi, 'uztaila').replace(/\bmm\b/gi, 'milimetro');
     esana = esana.replace(/km\/h/gi, ' kilometro orduko').replace(/\bkm\b/gi, 'kilometro');
     esana = esana.replace(/[():;]/g, ', ').replace(/,\s*,/g, ',');
+  }
+  if(isEu){
+    try{
+      const r = await fetch("/api/tts", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({text:esana, lang:"eu"})});
+      if(r.ok){
+        const b = await r.blob();
+        const url = URL.createObjectURL(b);
+        const audio = new Audio(url);
+        audio.onended = () => URL.revokeObjectURL(url);
+        audio.play();
+        return;
+      }
+    }catch(e){ console.warn("Elhuyar TTS fallback:", e); }
   }
   const u = new SpeechSynthesisUtterance(esana);
   const voices = window.speechSynthesis.getVoices();
