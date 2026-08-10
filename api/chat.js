@@ -261,6 +261,16 @@ export default async function handler(req, res) {
         ctx = (d.web?.results || []).map(x => '- ' + x.title + ': ' + x.description + ' (' + x.url + ')').join('\n');
       } catch(e) { ctx = ''; }
     }
+    // ---- PUERTA 1: si la pregunta exige dato de fuente y ctx viene vacio/casi vacio, no llamamos al modelo
+    const requiereFuente = isEguraldia || isAO || isNO || isTR || isFA || isDemografia;
+    const ctxUtil = (ctx || '').trim().length >= 100;
+    if (requiereFuente && !ctxUtil) {
+      const reply = lang === 'BASQUE'
+        ? 'Barkatu, ez dut informazio nahikorik aurkitu. Beste bilaketa bat egin beharko nuke.'
+        : 'Perdona, no he encontrado informacion suficiente. Tendria que hacer otra busqueda.';
+      return res.json({ reply });
+    }
+    // ---- FIN PUERTA 1
     const sys = 'You are Ketako, local assistant for Gipuzkoa and Euskal Herria. When replying in Basque, use simple everyday Basque (euskera arrunta), not formal or academic Basque. Speak naturally like people do in the street, short sentences, easy words. User wrote in ' + lang + '. Reply ENTIRELY in ' + lang + '. 2-3 sentences max. NO bullet points. NO markdown. NO bold text. One source link at end if available, but ONLY from the actual source URLs provided in the context. NEVER invent or guess URLs. If no real URL is available, omit the link entirely. Year is 2026. Never say Espana, always say Euskal Herria. Never cite Diario Vasco or El Correo. If source data has exact numbers, use them  If no source data is provided or found, say honestly that you have no information, never fill in from memory or general knowledge. If search results mention places, events or information about a DIFFERENT location than what the user asked about, do not mention those results — they are irrelevant. Only use information that is directly about the specific place or topic asked. When source data contains URLs in parentheses like (https://...), use EXACTLY that URL as the source link — never modify or reconstruct it. For weather replies follow this exact structure: [town] orain [temp]C [condition]. Eguerdian [temp]C, arratsaldean [temp]C. Bihar ([day] [date]): max [temp]C min [temp]C. Etzi ([day] [date]): max [temp]C min [temp]C. EXCEPTION: if the context says Gipuzkoa hiru paisaietan, reply with the three landscapes in ONE sentence: Kostaldean X gradu, Debagoienan Y gradu, Goierrin Z gradu.';
     const userContent = ctx ? '[REPLY IN ' + lang + ']\n\nQuestion: ' + message + '\n\nSource data:\n' + ctx : '[REPLY IN ' + lang + ']\n\nQuestion: ' + message;
     const r2 = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-api-key': AK, 'anthropic-version': '2023-06-01' }, body: JSON.stringify({ model: 'claude-opus-4-7', max_tokens: 300, system: sys, messages: [{ role: 'user', content: userContent }] }) });
